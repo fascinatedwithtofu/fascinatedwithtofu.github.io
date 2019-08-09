@@ -6,18 +6,18 @@
   
   <title>Google 先生に聞いても意外とわからなかったウェブスクレイピング基礎編 | fascinated with tofu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##はじめに 去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。">
+  <meta name="description" content="はじめに去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。">
 <meta name="keywords" content="IT,scraping,ruby">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Google 先生に聞いても意外とわからなかったウェブスクレイピング基礎編">
 <meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/01/08/scraping1/index.html">
 <meta property="og:site_name" content="fascinated with tofu">
-<meta property="og:description" content="##はじめに 去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。">
+<meta property="og:description" content="はじめに去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-03-16T07:26:00.000Z">
+<meta property="og:updated_time" content="2019-08-09T08:45:13.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Google 先生に聞いても意外とわからなかったウェブスクレイピング基礎編">
-<meta name="twitter:description" content="##はじめに 去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。">
+<meta name="twitter:description" content="はじめに去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。">
   
     <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
   
@@ -108,26 +108,23 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##はじめに</p>
-<p>去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。<br>結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。</p>
+        <h3 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h3><p>去年からチラチラ気になっていたウェブスクレイピングなるものについて、年末年始にまとまって調べることができました。<br>結論、Nokogiri, Scrapy, Goutte, などなど方法に特化した情報が多いため分からないことだらけでしたが、なんとかコーディング能力のない（プログラムを0から書いた経験無い）自分が勘所をつかむに至った情報だけを整理します。</p>
 <a id="more"></a>
-<p>##スクレイピングとは何か？</p>
-<p>ざっくりいうと、ウェブサイトにある情報のうち、欲しい部分だけを抽出する技術のことです。</p>
+<h3 id="スクレイピングとは何か？"><a href="#スクレイピングとは何か？" class="headerlink" title="スクレイピングとは何か？"></a>スクレイピングとは何か？</h3><p>ざっくりいうと、ウェブサイトにある情報のうち、欲しい部分だけを抽出する技術のことです。</p>
 <blockquote>
 <p>ウェブスクレイピング（英: Web scraping）とは、ウェブサイトから情報を抽出するコンピュータソフトウェア技術のこと。ウェブ・クローラー[1]あるいはウェブ・スパイダー[2]とも呼ばれる。 通常このようなソフトウェアプログラムは低レベルのHTTPを実装することで、もしくはウェブブラウザを埋め込むことによって、WWWのコンテンツを取得する。<br><a href="https://ja.wikipedia.org/wiki/%E3%82%A6%E3%82%A7%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AC%E3%82%A4%E3%83%94%E3%83%B3%E3%82%B0" target="_blank" rel="noopener">ウェブスクレイピング - Wikipedia</a></p>
 </blockquote>
-<h2 id="クローリング？-API"><a href="#クローリング？-API" class="headerlink" title="クローリング？ API ?"></a>クローリング？ API ?</h2><p>クローリングという単語が併せて紹介されていることが多いが、クローリングとは人が実際にウェブブラウザでウェブサイトを閲覧する行為を、プログラムを使って擬似的に再現する行為であり、スクレイピングをする上で必要となる手段の一つという位置付けです。<br>近年ではログイン行為のように人がブラウザで何か反応しないと目的のページに到達できない動的ページが増えているため、クローリングの重要性が増しています。<br>また、対比される技術として API (Application Programming Interface) があります。<br>情報を外から呼び出すための仕組みがそもそも用意されていれば、ウェブスクレイピングのようなある種力技（？）はそもそも不要です。</p>
+<h3 id="クローリング？-API"><a href="#クローリング？-API" class="headerlink" title="クローリング？ API ?"></a>クローリング？ API ?</h3><p>クローリングという単語が併せて紹介されていることが多いが、クローリングとは人が実際にウェブブラウザでウェブサイトを閲覧する行為を、プログラムを使って擬似的に再現する行為であり、スクレイピングをする上で必要となる手段の一つという位置付けです。<br>近年ではログイン行為のように人がブラウザで何か反応しないと目的のページに到達できない動的ページが増えているため、クローリングの重要性が増しています。<br>また、対比される技術として API (Application Programming Interface) があります。<br>情報を外から呼び出すための仕組みがそもそも用意されていれば、ウェブスクレイピングのようなある種力技（？）はそもそも不要です。</p>
 <p>一応マナーがありますので、知らなかったで済まないこんな世の中を生き抜くために参照してください。</p>
 <iframe class="embed-card embed-webcard" style="display: block; width: 100%; height: 155px; max-width: 500px; margin: 10px 0px;" title="Webスクレイピングの注意事項一覧 - Qiita" src="//hatenablog-parts.com/embed?url=http%3A%2F%2Fqiita.com%2Fnezuq%2Fitems%2Fc5e827e1827e7cb29011" frameborder="0" scrolling="no"></iframe>
 
-<h2 id="ウェブスクレイピングのメリット"><a href="#ウェブスクレイピングのメリット" class="headerlink" title="ウェブスクレイピングのメリット"></a>ウェブスクレイピングのメリット</h2><h3 id="個人用途"><a href="#個人用途" class="headerlink" title="個人用途"></a>個人用途</h3><p>+いろいろなEコマースサイトから欲しい商品と価格情報を定期的に抽出し、比較検討の材料とする（価格コムがあればいらないですが・・・）<br>+広告が多くて辟易するサイトをスッキリ表示させる（Cleary というサービスが昔ありましたね）<br>+ローソンのおでんの価格一覧を取得する（楽しそうですね！）<br><a href="http://chuckwebtips.hatenablog.com/embed/2015/12/01/065015" target="_blank" rel="noopener">Rubyでスクレイピングに挑戦してみた - コンパイラかく語りき</a></p>
-<h3 id="ビジネス用途"><a href="#ビジネス用途" class="headerlink" title="ビジネス用途"></a>ビジネス用途</h3><p>+いろいろな銀行の口座情報を一つのアプリから表示させるサービスを開発する（思い当たるサービスがいくつかありますが、以下の記事がどストライクです。<a href="http://www.yanoict.com/%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%8B%E3%82%89%E6%8E%A2%E3%81%99/ict%E5%85%A8%E8%88%AC/11059.html" target="_blank" rel="noopener">FinTech市場拡大に向けて注視していくべきポイント――スクリーンスクレイピングの現状と今後の銀行によるAPI公開をめぐる課題 | 市場調査の矢野経済 ICTユニット</a>）<br>+ソーシャルメディア分析<br>+各種まとめサイトの自動運用</p>
-<p>##ウェブスクレイピングの前提となる知識</p>
-<p>ウェブスクレイピングは HTLM （ふだんわれわれがブラウザで見ている情報の記述ルール）を利用します。<br>そのなかでも理解すべき情報は、DOM です。具体的には、CSS や XPATH です。</p>
-<h3 id="DOM-とは？"><a href="#DOM-とは？" class="headerlink" title="DOM とは？"></a>DOM とは？</h3><p>DOM（Document Object Model）とは、文書の中の情報（見出し１、本文、URL リンク、etc.）をツリー構造のように持つことができるよね？という概念です。みなさんも文章を書くとき、目次を考えたり構成を考えたりしますよね？<br>                                        <a href="http://piyo-js.com/05/dom.html" target="_blank" rel="noopener">DOMとは - JavaScript超初心者によるJavaScript入門講座</a></p>
-<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><p>CSS（Cascading Style Sheets）とは、ウェブサイトの見た目をクールに整理するためのものです。DOM という概念のもと、文章の中身ではなく、スタイルを指定するものです。</p>
-<h3 id="XPath"><a href="#XPath" class="headerlink" title="XPath"></a>XPath</h3><p>DOM  という概念を使って、実際に欲しい情報の場所を指定するための言語です。<br>「Body 配下の最初の Div タグの中の文章が欲しい」などの記述ができます。</p>
-<h2 id="基本的なスクレイピングの流れ"><a href="#基本的なスクレイピングの流れ" class="headerlink" title="基本的なスクレイピングの流れ"></a>基本的なスクレイピングの流れ</h2><p>+欲しい情報がどの DOM （住所）にあるか確認する<br>+情報を取得する<br>+（必要なら）取得した情報を加工する<br>+なにがしかに出力する （text, json, etc.）</p>
+<h3 id="ウェブスクレイピングのメリット"><a href="#ウェブスクレイピングのメリット" class="headerlink" title="ウェブスクレイピングのメリット"></a>ウェブスクレイピングのメリット</h3><h4 id="個人用途"><a href="#個人用途" class="headerlink" title="個人用途"></a>個人用途</h4><p>+いろいろなEコマースサイトから欲しい商品と価格情報を定期的に抽出し、比較検討の材料とする（価格コムがあればいらないですが・・・）<br>+広告が多くて辟易するサイトをスッキリ表示させる（Cleary というサービスが昔ありましたね）<br>+ローソンのおでんの価格一覧を取得する（楽しそうですね！）<br><a href="http://chuckwebtips.hatenablog.com/embed/2015/12/01/065015" target="_blank" rel="noopener">Rubyでスクレイピングに挑戦してみた - コンパイラかく語りき</a></p>
+<h4 id="ビジネス用途"><a href="#ビジネス用途" class="headerlink" title="ビジネス用途"></a>ビジネス用途</h4><p>+いろいろな銀行の口座情報を一つのアプリから表示させるサービスを開発する（思い当たるサービスがいくつかありますが、以下の記事がどストライクです。<a href="http://www.yanoict.com/%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%8B%E3%82%89%E6%8E%A2%E3%81%99/ict%E5%85%A8%E8%88%AC/11059.html" target="_blank" rel="noopener">FinTech市場拡大に向けて注視していくべきポイント――スクリーンスクレイピングの現状と今後の銀行によるAPI公開をめぐる課題 | 市場調査の矢野経済 ICTユニット</a>）<br>+ソーシャルメディア分析<br>+各種まとめサイトの自動運用</p>
+<h3 id="ウェブスクレイピングの前提となる知識"><a href="#ウェブスクレイピングの前提となる知識" class="headerlink" title="ウェブスクレイピングの前提となる知識"></a>ウェブスクレイピングの前提となる知識</h3><p>ウェブスクレイピングは HTLM （ふだんわれわれがブラウザで見ている情報の記述ルール）を利用します。<br>そのなかでも理解すべき情報は、DOM です。具体的には、CSS や XPATH です。</p>
+<h4 id="DOM-とは？"><a href="#DOM-とは？" class="headerlink" title="DOM とは？"></a>DOM とは？</h4><p>DOM（Document Object Model）とは、文書の中の情報（見出し１、本文、URL リンク、etc.）をツリー構造のように持つことができるよね？という概念です。みなさんも文章を書くとき、目次を考えたり構成を考えたりしますよね？<br>                                        <a href="http://piyo-js.com/05/dom.html" target="_blank" rel="noopener">DOMとは - JavaScript超初心者によるJavaScript入門講座</a></p>
+<h4 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h4><p>CSS（Cascading Style Sheets）とは、ウェブサイトの見た目をクールに整理するためのものです。DOM という概念のもと、文章の中身ではなく、スタイルを指定するものです。</p>
+<h4 id="XPath"><a href="#XPath" class="headerlink" title="XPath"></a>XPath</h4><p>DOM  という概念を使って、実際に欲しい情報の場所を指定するための言語です。<br>「Body 配下の最初の Div タグの中の文章が欲しい」などの記述ができます。</p>
+<h3 id="基本的なスクレイピングの流れ"><a href="#基本的なスクレイピングの流れ" class="headerlink" title="基本的なスクレイピングの流れ"></a>基本的なスクレイピングの流れ</h3><p>+欲しい情報がどの DOM （住所）にあるか確認する<br>+情報を取得する<br>+（必要なら）取得した情報を加工する<br>+なにがしかに出力する （text, json, etc.）</p>
 <p>長くなってきたので講釈はここまでとのことで、次の記事に私が試行錯誤した実践編を書きたいと思います。</p>
 
       

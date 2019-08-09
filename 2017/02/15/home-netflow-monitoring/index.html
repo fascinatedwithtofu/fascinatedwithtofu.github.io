@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://cldup.com/pODOVqBxGD.png">
 <meta property="og:image" content="https://cldup.com/Kf_7GJTXHt.png">
 <meta property="og:image" content="https://cldup.com/jtVdDkcxA4.png">
-<meta property="og:updated_time" content="2017-03-16T07:29:51.000Z">
+<meta property="og:updated_time" content="2019-08-09T08:38:38.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="無料でできる自宅ネットワーク監視環境の構築">
 <meta name="twitter:description" content="なぜか2015年に書いたこの記事だけ検索による流入が毎日ぽつぽつあります。その補足というか顛末を書いておきたいと思います。(書いていて改めて思いますが、当時やっていた設定は本当に面倒だなと思います。前記事で紹介したalpineやphotonのような存在を活用できる現在が有難いです。) 自宅ネットワークにおいて、NetFlow や Syslog を無料で手軽に可視化してみたく、Elasticsear">
@@ -117,32 +117,31 @@ ga('send', 'pageview');
 <a id="more"></a>
 
 
-<p>###話さないこと<br>ELK とは何か？とか、ELK のセットアップ方法などは割愛します。<br>後述の参考リンクや<a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">こちら</a>をご参照ください。</p>
-<p>###背景<br>いままでは家のブロードバンドルータには高度な機能がまったくなく、ただインターネットに繋ぐだけでしたが、機会があってハイエンドなルータを入手することができたため、高度な機能を試しに使ってみました。<br>もともときれいな GUI が用意されていますが、見える情報は NetFlow や Syslog を有効にすることで格段に増えます。</p>
-<p>###監視する必要はあるの？<br>2016年の調査で一人あたりのスマートデバイス数は平均3台との調査もあります。<br>家の中に目を向けると、思いつくだけでネットワークカメラ、 IRKit 、スマートロック、ラズパイ的な自作物などなど、どんな OS で、どんなネットワーク/セキュリティ特性を持つのかよくわからないけどとりあえず便利！というようなデバイスがどんどん増えていきます。</p>
+<h3 id="話さないこと"><a href="#話さないこと" class="headerlink" title="話さないこと"></a>話さないこと</h3><p>ELK とは何か？とか、ELK のセットアップ方法などは割愛します。<br>後述の参考リンクや<a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">こちら</a>をご参照ください。</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>いままでは家のブロードバンドルータには高度な機能がまったくなく、ただインターネットに繋ぐだけでしたが、機会があってハイエンドなルータを入手することができたため、高度な機能を試しに使ってみました。<br>もともときれいな GUI が用意されていますが、見える情報は NetFlow や Syslog を有効にすることで格段に増えます。</p>
+<h3 id="監視する必要はあるの？"><a href="#監視する必要はあるの？" class="headerlink" title="監視する必要はあるの？"></a>監視する必要はあるの？</h3><p>2016年の調査で一人あたりのスマートデバイス数は平均3台との調査もあります。<br>家の中に目を向けると、思いつくだけでネットワークカメラ、 IRKit 、スマートロック、ラズパイ的な自作物などなど、どんな OS で、どんなネットワーク/セキュリティ特性を持つのかよくわからないけどとりあえず便利！というようなデバイスがどんどん増えていきます。</p>
 <p><a href="[http://amzn.to/2iMw10X]">Fire TV Stick</a> は、実体は Android ですが、そういうことを気にせず過ごしてしまうことって結構あると思います。</p>
 <p>昨年で記憶に残っているニュースとして、中国製 Android 端末にバックドアが仕掛けられていたというものがありました。</p>
 <p><a href="http://www.itmedia.co.jp/enterprise/articles/1611/16/news059.html" target="_blank" rel="noopener">Android端末のファームウェアに隠し機能、ユーザー情報を中国に送信</a></p>
 <p>インターネットの出入口の情報が可視化できれば、変な通信を見つけやすくなるはずです。</p>
-<p>###なぜ ELK を選択したか</p>
-<ul>
+<h3 id="なぜ-ELK-を選択したか"><a href="#なぜ-ELK-を選択したか" class="headerlink" title="なぜ ELK を選択したか"></a>なぜ ELK を選択したか</h3><ul>
 <li>Open Source で無償</li>
 <li>機能追加が精力的に行われている</li>
 <li>ユーザも多くメジャーな機器のログのパーサであればたいてい Github に落ちている</li>
 <li>etc…</li>
 </ul>
-<p>###ELKでできること<br>+ログ収集、管理、検索システム<br>+イベントのリアルタイムな分析およびフォレンジックな分析を実現できる<br>+機器を横断した分析ができる</p>
-<p>###我が家の監視環境の動作概要と構成<br>+Logstash で NetFlow や Syslog を受け取り、各種処理（パースしたり、情報を追加したり、切り出したり）をする<br>+Elasticsearch に渡してインデックス化する<br>+Kibana 経由でインデックスにアクセスし、グラフを作ったり、検索したりする</p>
+<h3 id="ELKでできること"><a href="#ELKでできること" class="headerlink" title="ELKでできること"></a>ELKでできること</h3><p>+ログ収集、管理、検索システム<br>+イベントのリアルタイムな分析およびフォレンジックな分析を実現できる<br>+機器を横断した分析ができる</p>
+<h3 id="我が家の監視環境の動作概要と構成"><a href="#我が家の監視環境の動作概要と構成" class="headerlink" title="我が家の監視環境の動作概要と構成"></a>我が家の監視環境の動作概要と構成</h3><p>+Logstash で NetFlow や Syslog を受け取り、各種処理（パースしたり、情報を追加したり、切り出したり）をする<br>+Elasticsearch に渡してインデックス化する<br>+Kibana 経由でインデックスにアクセスし、グラフを作ったり、検索したりする</p>
 <p><img src="https://cldup.com/pODOVqBxGD.png" alt="Monitoring Environment"></p>
-<p>###Logstach の設定例<br><code>grok</code>やフィルタの設定を書くことでもっと作り込むことはできますが NetFlow を受け取って Elasticsearch に渡すための最小設定は以下だと思います。</p>
+<h3 id="Logstach-の設定例"><a href="#Logstach-の設定例" class="headerlink" title="Logstach の設定例"></a>Logstach の設定例</h3><p><code>grok</code>やフィルタの設定を書くことでもっと作り込むことはできますが NetFlow を受け取って Elasticsearch に渡すための最小設定は以下だと思います。</p>
 <figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;   </span><br><span class="line">     udp&#123;  </span><br><span class="line">       <span class="attr">port</span> =&gt; <span class="number">9995</span>  // NetFlow を受け取るポート</span><br><span class="line">       <span class="attr">codec</span> =&gt; netflow&#123;  </span><br><span class="line">         <span class="attr">definitions</span> =&gt; <span class="string">"/etc/logstash/conf.d/codec/netflow.yaml"</span>   // NetFlow を理解するための設定（参考で後述）</span><br><span class="line">         <span class="attr">versions</span> =&gt; [<span class="number">9</span>]  </span><br><span class="line">       &#125;  </span><br><span class="line">     &#125;  </span><br><span class="line">   &#125;  </span><br><span class="line"></span><br><span class="line"> <span class="keyword">output</span> &#123;  // Elasticsearch に渡すための設定</span><br><span class="line">     stdout &#123; <span class="attr">codec</span> =&gt; rubydebug&#125;  </span><br><span class="line">    <span class="keyword">elasticsearch</span>  </span><br><span class="line">    <span class="keyword">index</span> =&gt; “logstash-netflow-%&#123;+YYYY.MM.dd&#125;<span class="string">"                                     </span></span><br><span class="line"><span class="string">    host =&gt; 'localhost'                                                              </span></span><br><span class="line"><span class="string">       &#125;  </span></span><br><span class="line"><span class="string">    &#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>###実際に作ったダッシュボード例<br><img src="https://cldup.com/Kf_7GJTXHt.png" alt="NetFlow DstIP Count"><br>アウトバウンドのトラフィックのうち宛先 IPv4 アドレスを時系列でカウントした棒グラフです。<br>ルータが、Google DNS(8.8.8.8) に対してポーリングしていることがわかります。</p>
+<h3 id="実際に作ったダッシュボード例"><a href="#実際に作ったダッシュボード例" class="headerlink" title="実際に作ったダッシュボード例"></a>実際に作ったダッシュボード例</h3><p><img src="https://cldup.com/Kf_7GJTXHt.png" alt="NetFlow DstIP Count"><br>アウトバウンドのトラフィックのうち宛先 IPv4 アドレスを時系列でカウントした棒グラフです。<br>ルータが、Google DNS(8.8.8.8) に対してポーリングしていることがわかります。</p>
 <p><img src="https://cldup.com/jtVdDkcxA4.png" alt="Syslog Dashboard"><br>左上から時計回りに、<br>+[data table]Inbound でドロップしたトラフィックの宛先ポート、プロトコル、国名<br>+[pie chart]Deny トラフィックのプロコトルおよび宛先ポート割合<br>+[ｍetric]Inbound で Drop した回数<br>+[pie chart]Allow と Deny の割合<br>+[pie chart]Deny トラフィックの国-地域名割合<br>+[histogram]Deny トラフィックの宛先ポート別推移</p>
-<p>###その他気付けたこと<br>インバウンド（インターネットー＞家）でスキャニングされている形跡がありました。23, 80, 3389, 8080 といったwell-known port 以外に53413/udp などが観測されました。<br>調べてみたところ同時期にこのようなレポートが JPCERT より発行されていました。<br><a href="https://www.jpcert.or.jp/tsubame/report/report201510-12.html" target="_blank" rel="noopener">JPCERT TSUBAME インターネット定点観測レポート 2015年10-12月</a></p>
+<h3 id="その他気付けたこと"><a href="#その他気付けたこと" class="headerlink" title="その他気付けたこと"></a>その他気付けたこと</h3><p>インバウンド（インターネットー＞家）でスキャニングされている形跡がありました。23, 80, 3389, 8080 といったwell-known port 以外に53413/udp などが観測されました。<br>調べてみたところ同時期にこのようなレポートが JPCERT より発行されていました。<br><a href="https://www.jpcert.or.jp/tsubame/report/report201510-12.html" target="_blank" rel="noopener">JPCERT TSUBAME インターネット定点観測レポート 2015年10-12月</a></p>
 <p>上記のような気付きが得られた以外にも、久しぶりに新規で勢いのある OSS を触ることができて非常に勉強になりました。</p>
 <p>また、Syslog を含めると結構なログ量になり Java のプロセスがもっさりしてきましたので、定期的に cron + curator で削除する運用にしました。</p>
-<p>###参考<br><a href="http://blogs.cisco.com/security/step-by-step-setup-of-elk-for-netflow-analytics" target="_blank" rel="noopener">Step-by-Step Setup of ELK for NetFlow Analytics</a><br><a href="https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/lib/logstash/codecs/netflow/netflow.yaml" target="_blank" rel="noopener">Netflow.yam - Github</a></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://blogs.cisco.com/security/step-by-step-setup-of-elk-for-netflow-analytics" target="_blank" rel="noopener">Step-by-Step Setup of ELK for NetFlow Analytics</a><br><a href="https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/lib/logstash/codecs/netflow/netflow.yaml" target="_blank" rel="noopener">Netflow.yam - Github</a></p>
 
       
     </div>

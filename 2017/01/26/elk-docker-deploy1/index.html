@@ -6,13 +6,13 @@
   
   <title>Docker for Mac 環境で簡単に ELK Stack をビルドする1 | fascinated with tofu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="###背景先ポストで書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。 visualizing netflow version 9 on ELK ###当時のログ可視化環境作り当時こんな記事は">
+  <meta name="description" content="背景先ポストで書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。 visualizing netflow version 9 on ELK 当時のログ可視化環境作り当時こんな記事はありませんで">
 <meta name="keywords" content="IT,docker,elastic,elk,logstash,kibana,netflow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker for Mac 環境で簡単に ELK Stack をビルドする1">
 <meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/01/26/elk-docker-deploy1/index.html">
 <meta property="og:site_name" content="fascinated with tofu">
-<meta property="og:description" content="###背景先ポストで書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。 visualizing netflow version 9 on ELK ###当時のログ可視化環境作り当時こんな記事は">
+<meta property="og:description" content="背景先ポストで書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。 visualizing netflow version 9 on ELK 当時のログ可視化環境作り当時こんな記事はありませんで">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://cldup.com/YV7Wqkj6WP.png">
 <meta property="og:image" content="https://cldup.com/dcDYVN0gw5.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="https://cldup.com/IA3FgqijE8.png">
 <meta property="og:image" content="https://cldup.com/34xkpVZbdi.png">
 <meta property="og:image" content="https://cldup.com/iyArPnFD4o.png">
-<meta property="og:updated_time" content="2017-02-03T17:11:58.000Z">
+<meta property="og:updated_time" content="2019-08-09T08:35:14.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker for Mac 環境で簡単に ELK Stack をビルドする1">
-<meta name="twitter:description" content="###背景先ポストで書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。 visualizing netflow version 9 on ELK ###当時のログ可視化環境作り当時こんな記事は">
+<meta name="twitter:description" content="背景先ポストで書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。 visualizing netflow version 9 on ELK 当時のログ可視化環境作り当時こんな記事はありませんで">
 <meta name="twitter:image" content="https://cldup.com/YV7Wqkj6WP.png">
   
     <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
@@ -114,8 +114,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###背景<br><a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">先ポスト</a>で書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。<br> <a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">visualizing netflow version 9 on ELK</a></p>
-<p>###当時のログ可視化環境作り<br>当時こんな記事はありませんでしたが、いまほど「可視化」が流行っておらず、無料のものは殆ど使い物にならない印象でした。<br> <a href="http://designetwork.hatenablog.com/entry/2016/03/21/NetFlow-Collector" target="_blank" rel="noopener">NetFlow コレクター(無料・フリー版)の比較検討【2016決定版】</a></p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p><a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">先ポスト</a>で書いたように、2015年頃に Elasticsearch, Logstash, Kiban あわせて ELK Stack なるものを知って、自分の検証環境の簡易 Syslog サーバとしてみたり、自宅監視用の NetfFlow コレクタにしたりしていました。<br> <a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">visualizing netflow version 9 on ELK</a></p>
+<h3 id="当時のログ可視化環境作り"><a href="#当時のログ可視化環境作り" class="headerlink" title="当時のログ可視化環境作り"></a>当時のログ可視化環境作り</h3><p>当時こんな記事はありませんでしたが、いまほど「可視化」が流行っておらず、無料のものは殆ど使い物にならない印象でした。<br> <a href="http://designetwork.hatenablog.com/entry/2016/03/21/NetFlow-Collector" target="_blank" rel="noopener">NetFlow コレクター(無料・フリー版)の比較検討【2016決定版】</a></p>
 <p>その時の手順はというと、   </p>
 <a id="more"></a>
 
@@ -131,25 +131,25 @@ ga('send', 'pageview');
 </ul>
 <h3 id="本当に楽になったログ可視化環境作り"><a href="#本当に楽になったログ可視化環境作り" class="headerlink" title="本当に楽になったログ可視化環境作り"></a>本当に楽になったログ可視化環境作り</h3><p>Docker や Vagrant といった、Infrastructure as a Code の潮流による、スタック化されたアプリケーションがある程度簡易に利用できるようになりました。<br><a href="http://www.fascinatedwithtofu.com/2015/07/21/vagrant/">vagrant and elk stack installation
 </a></p>
-<p>###いまどきの手順ざっくりメモ<br>Docker の基本的な概念や用語については割愛します。まずそちらからという方は以下等をご参照ください。<br><a href="qiita.com/tigberd/items/b94ae2bf7d78685cd6f5">Dockerについて基本から最近追加された機能までまとめ</a></p>
-<p>####Docker for Mac のインストール<br>2016年末まで、Mac への正式サポートがなかったため、ググると混乱する可能性があります。公式サイトが英語ですが最も正確です。<br><a href="https://docs.docker.com/docker-for-mac/" target="_blank" rel="noopener">Get started with Docker for Mac</a>  </p>
+<h3 id="いまどきの手順ざっくりメモ"><a href="#いまどきの手順ざっくりメモ" class="headerlink" title="いまどきの手順ざっくりメモ"></a>いまどきの手順ざっくりメモ</h3><p>Docker の基本的な概念や用語については割愛します。まずそちらからという方は以下等をご参照ください。<br><a href="qiita.com/tigberd/items/b94ae2bf7d78685cd6f5">Dockerについて基本から最近追加された機能までまとめ</a></p>
+<h4 id="Docker-for-Mac-のインストール"><a href="#Docker-for-Mac-のインストール" class="headerlink" title="Docker for Mac のインストール"></a>Docker for Mac のインストール</h4><p>2016年末まで、Mac への正式サポートがなかったため、ググると混乱する可能性があります。公式サイトが英語ですが最も正確です。<br><a href="https://docs.docker.com/docker-for-mac/" target="_blank" rel="noopener">Get started with Docker for Mac</a>  </p>
 <p>2017年1月でバージョンは 1.12.1<br><img src="https://cldup.com/YV7Wqkj6WP.png" alt="docker version"></p>
-<p>####Kitematic (Docker Toolbox) のインストール<br>楽をするために、Mac のメニューバーのクジラアイコンから、Kitematic をインストールしましょう。<br>GUI で、好きな Docker イメージをインストールしたり、設定変更したりできるようになります。  </p>
+<h4 id="Kitematic-Docker-Toolbox-のインストール"><a href="#Kitematic-Docker-Toolbox-のインストール" class="headerlink" title="Kitematic (Docker Toolbox) のインストール"></a>Kitematic (Docker Toolbox) のインストール</h4><p>楽をするために、Mac のメニューバーのクジラアイコンから、Kitematic をインストールしましょう。<br>GUI で、好きな Docker イメージをインストールしたり、設定変更したりできるようになります。  </p>
 <p><img src="https://cldup.com/dcDYVN0gw5.png" alt="menu">  </p>
 <p><a href="https://kitematic.com/" target="_blank" rel="noopener">kitematic by docker</a> というページにリダイレクトされます。<br>注意）現在、Kitematic は Docker Toolbox に吸収されたようです。<br><a href="http://qiita.com/tak74/items/3ea99eb62a20041d8fd5" target="_blank" rel="noopener">Docker for mac と Kitematic でGUIから環境構築</a>  </p>
 <p>Kitematic のダウンロードを指示に従って進めますと、DockerHub アカウントとの連携を促されますが、しなくとも大丈夫です。</p>
-<p>####Docker Image の検索とインストール<br>ここまでお読みいただくと既にお分かりかと思いますが、ここから例えば<code>+NEW</code>を押して、検索窓から<code>elk</code>  <code>docker-elk</code> などと検索してみます。</p>
+<h4 id="Docker-Image-の検索とインストール"><a href="#Docker-Image-の検索とインストール" class="headerlink" title="Docker Image の検索とインストール"></a>Docker Image の検索とインストール</h4><p>ここまでお読みいただくと既にお分かりかと思いますが、ここから例えば<code>+NEW</code>を押して、検索窓から<code>elk</code>  <code>docker-elk</code> などと検索してみます。</p>
 <p><img src="https://cldup.com/RupDd009KG.png" alt><br><img src="https://cldup.com/rbEsyLuSzb.png" alt></p>
 <p>たくさん出てきますね。</p>
-<p>####ELK を触ってみる<br>例えば以下の Docker Image を入れてみます。<br>これを選択した理由は、ダウンロード数が多く、説明分に latest から古いバージョンまで利用できる旨が説明されていたためです。<br><a href="https://hub.docker.com/r/sebp/elk/" target="_blank" rel="noopener">sebp/elk</a><br><code>+CREATE</code> を押すとダウンロードとデプロイが開始されます。数分かかることもあります。  </p>
+<h4 id="ELK-を触ってみる"><a href="#ELK-を触ってみる" class="headerlink" title="ELK を触ってみる"></a>ELK を触ってみる</h4><p>例えば以下の Docker Image を入れてみます。<br>これを選択した理由は、ダウンロード数が多く、説明分に latest から古いバージョンまで利用できる旨が説明されていたためです。<br><a href="https://hub.docker.com/r/sebp/elk/" target="_blank" rel="noopener">sebp/elk</a><br><code>+CREATE</code> を押すとダウンロードとデプロイが開始されます。数分かかることもあります。  </p>
 <p><img src="https://cldup.com/zPuxwHzPxE.png" alt="完了後">  </p>
 <p>右上<code>Settings&gt;General</code>から、各種バージョン等が指定されていることがわかります。<br><img src="https://cldup.com/0oXs0_a7aB.png" alt="Settings&gt;General">  </p>
 <p><code>Settings&gt;Ports</code>では、このコンテナとローカルホスト (Mac) が通信するための設定が記述されています。<br><img src="https://cldup.com/IA3FgqijE8.png" alt="Settings&gt;Ports"></p>
-<p>####Kibana の起動確認<br><code>http://localhost:32770/</code> へアクセスします。<br>本来の Kibana へは、<ipaddress>:5601 がデフォルトですが、ここでは、PAT が設定されており、`localhost:32770’ をブラウザからたたきます。</ipaddress></p>
+<h4 id="Kibana-の起動確認"><a href="#Kibana-の起動確認" class="headerlink" title="Kibana の起動確認"></a>Kibana の起動確認</h4><p><code>http://localhost:32770/</code> へアクセスします。<br>本来の Kibana へは、<ipaddress>:5601 がデフォルトですが、ここでは、PAT が設定されており、`localhost:32770’ をブラウザからたたきます。</ipaddress></p>
 <p><img src="https://cldup.com/34xkpVZbdi.png" alt></p>
-<p>####Elasticsearch の起動確認<br>同様に、<code>http://localhost:32769</code>が 従来における <code>localhost:9200</code> へのアクセスで、Elasticsearch のプロセスが起動していることの確認となります。<br><img src="https://cldup.com/iyArPnFD4o.png" alt>   </p>
-<p>####Terminal へのアクセス<br><code>EXEC</code> をクリックすると、ターミナルアクセスができるようになります。<br><code>bash</code> が使えます。</p>
-<p>####Logstash の起動確認<br><code>logstash</code>,<code>kibana</code>,<code>elasticsearch</code>にまつわるものは<code>opt</code>ディレクトリにあります。</p>
+<h4 id="Elasticsearch-の起動確認"><a href="#Elasticsearch-の起動確認" class="headerlink" title="Elasticsearch の起動確認"></a>Elasticsearch の起動確認</h4><p>同様に、<code>http://localhost:32769</code>が 従来における <code>localhost:9200</code> へのアクセスで、Elasticsearch のプロセスが起動していることの確認となります。<br><img src="https://cldup.com/iyArPnFD4o.png" alt>   </p>
+<h4 id="Terminal-へのアクセス"><a href="#Terminal-へのアクセス" class="headerlink" title="Terminal へのアクセス"></a>Terminal へのアクセス</h4><p><code>EXEC</code> をクリックすると、ターミナルアクセスができるようになります。<br><code>bash</code> が使えます。</p>
+<h4 id="Logstash-の起動確認"><a href="#Logstash-の起動確認" class="headerlink" title="Logstash の起動確認"></a>Logstash の起動確認</h4><p><code>logstash</code>,<code>kibana</code>,<code>elasticsearch</code>にまつわるものは<code>opt</code>ディレクトリにあります。</p>
 <p><code>cd opt/logstash</code>していただいて、以下のようなチュートリアルにある標準出力が出ればOKです。<br><code>Timestamp + hostname + 標準出力に入力した string</code><br>となります。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@38ef067ec9de:/opt/logstash# ./bin/logstash -e 'input &#123; stdin &#123; &#125; &#125; output &#123; stdout &#123;&#125; &#125;'</span><br><span class="line">hello world</span><br><span class="line">Sending Logstash's logs to /opt/logstash/logs which is now configured via log4j2.properties</span><br><span class="line">The stdin plugin is now waiting for input:</span><br><span class="line">[<span class="string">2017-01-25T10:04:59,971</span>][<span class="symbol">INFO </span>][<span class="string">logstash.pipeline        </span>] Starting pipeline &#123;"id"=&gt;"main", "pipeline.workers"=&gt;4, "pipeline.batch.size"=&gt;125, "pipeline.batch.delay"=&gt;5, "pipeline.max_inflight"=&gt;500&#125;</span><br><span class="line">[<span class="string">2017-01-25T10:04:59,987</span>][<span class="symbol">INFO </span>][<span class="string">logstash.pipeline        </span>] Pipeline main started</span><br><span class="line">2017-01-25T10:05:00.012Z 38ef067ec9de hello world</span><br><span class="line">[<span class="string">2017-01-25T10:05:00,090</span>][<span class="symbol">INFO </span>][<span class="string">logstash.agent           </span>] Successfully started Logstash API endpoint &#123;:port=&gt;9601&#125;</span><br></pre></td></tr></table></figure>
 

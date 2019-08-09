@@ -6,18 +6,18 @@
   
   <title>Hexo でひさびさに deploy したらパーミッションエラー | fascinated with tofu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="###エラー内容hexo d -g すると以下エラーが出た。 12Error: Permission denied (publickey).fatal: Could not read from remote repository.">
+  <meta name="description" content="エラー内容hexo d -g すると以下エラーが出た。 12Error: Permission denied (publickey).fatal: Could not read from remote repository.">
 <meta name="keywords" content="IT,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo でひさびさに deploy したらパーミッションエラー">
 <meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/08/01/hexo-permission-denied/index.html">
 <meta property="og:site_name" content="fascinated with tofu">
-<meta property="og:description" content="###エラー内容hexo d -g すると以下エラーが出た。 12Error: Permission denied (publickey).fatal: Could not read from remote repository.">
+<meta property="og:description" content="エラー内容hexo d -g すると以下エラーが出た。 12Error: Permission denied (publickey).fatal: Could not read from remote repository.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-01T04:48:02.000Z">
+<meta property="og:updated_time" content="2019-08-09T08:40:22.751Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo でひさびさに deploy したらパーミッションエラー">
-<meta name="twitter:description" content="###エラー内容hexo d -g すると以下エラーが出た。 12Error: Permission denied (publickey).fatal: Could not read from remote repository.">
+<meta name="twitter:description" content="エラー内容hexo d -g すると以下エラーが出た。 12Error: Permission denied (publickey).fatal: Could not read from remote repository.">
   
     <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
   
@@ -108,13 +108,13 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###エラー内容<br><code>hexo d -g</code> すると以下エラーが出た。</p>
+        <h3 id="エラー内容"><a href="#エラー内容" class="headerlink" title="エラー内容"></a>エラー内容</h3><p><code>hexo d -g</code> すると以下エラーが出た。</p>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Error: </span>Permission denied (publickey).</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 
-<p>###解決方法<br>以下の stack overflow を参考に、<code>_config.yml</code> を変更して解決した。<br><a href="https://stackoverflow.com/questions/21255438/permission-denied-publickey-fatal-could-not-read-from-remote-repository-whil/33072867" target="_blank" rel="noopener">Permission denied (publickey) fatal: Could not read from remote repository. while cloning Git repository</a></p>
+<h3 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h3><p>以下の stack overflow を参考に、<code>_config.yml</code> を変更して解決した。<br><a href="https://stackoverflow.com/questions/21255438/permission-denied-publickey-fatal-could-not-read-from-remote-repository-whil/33072867" target="_blank" rel="noopener">Permission denied (publickey) fatal: Could not read from remote repository. while cloning Git repository</a></p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: git</span><br><span class="line">-  <span class="attribute">repo</span>: <span class="string">'git@github.com:hogehoge/fugafuga.github.io.git'</span></span><br><span class="line">+  <span class="attribute">repo</span>: <span class="string">'https://github.com/hogehoge/fugafuga.github.io.git'</span></span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure>
 
 <p>以上</p>

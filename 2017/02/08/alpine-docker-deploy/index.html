@@ -6,20 +6,20 @@
   
   <title>軽量コンテナ用 OS  alpline に dockerを入れるまで | fascinated with tofu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 ###はじめにこちらとこちらをそのままなぞりインストールしました。">
+  <meta name="description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 はじめにこちらとこちらをそのままなぞりインストールしました。">
 <meta name="keywords" content="alpine,IT,docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="軽量コンテナ用 OS  alpline に dockerを入れるまで">
 <meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/02/08/alpine-docker-deploy/index.html">
 <meta property="og:site_name" content="fascinated with tofu">
-<meta property="og:description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 ###はじめにこちらとこちらをそのままなぞりインストールしました。">
+<meta property="og:description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 はじめにこちらとこちらをそのままなぞりインストールしました。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://cldup.com/szWK6B-qOJ.png">
 <meta property="og:image" content="https://cldup.com/vAMhjoumJz.jpg">
-<meta property="og:updated_time" content="2017-03-16T07:30:09.000Z">
+<meta property="og:updated_time" content="2019-08-09T08:32:05.275Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="軽量コンテナ用 OS  alpline に dockerを入れるまで">
-<meta name="twitter:description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 ###はじめにこちらとこちらをそのままなぞりインストールしました。">
+<meta name="twitter:description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 はじめにこちらとこちらをそのままなぞりインストールしました。">
 <meta name="twitter:image" content="https://cldup.com/szWK6B-qOJ.png">
   
     <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
@@ -112,22 +112,21 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><a href="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/">前ポストの photon</a> に引き続きライトな環境を試しましたのでメモ。<br>さくさくしていてよい。<br>余談ですが、ここで初めて触った <a href="http://fishshell.com/docs/current/tutorial.html" target="_blank" rel="noopener">fish</a> というシェル環境を、普段使い用 mac でも使い始めました。<br><img src="https://cldup.com/szWK6B-qOJ.png" alt></p>
-<p>###はじめに<br><a href="http://qiita.com/kmry2045/items/d15e3f60bff8806f193f" target="_blank" rel="noopener">こちら</a>と<a href="http://blog.stormcat.io/entry/alpine-entry-setup" target="_blank" rel="noopener">こちら</a>をそのままなぞりインストールしました。</p>
+<h3 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h3><p><a href="http://qiita.com/kmry2045/items/d15e3f60bff8806f193f" target="_blank" rel="noopener">こちら</a>と<a href="http://blog.stormcat.io/entry/alpine-entry-setup" target="_blank" rel="noopener">こちら</a>をそのままなぞりインストールしました。</p>
 <a id="more"></a>
 
-<p>###イメージの取得<br><a href="https://alpinelinux.org/downloads/" target="_blank" rel="noopener">本家ダウンロードサイト</a><br>alpine-standard-3.5.1-x86_64.iso</p>
-<p>###環境<br>ESXi：5.5<br>OS：その他の Linux 2.6 64bit<br>Memory/CPU：デフォルト</p>
-<p>###初回起動<br>以下の通りに root ログインし、セットアップコマンドを実行。</p>
+<h3 id="イメージの取得"><a href="#イメージの取得" class="headerlink" title="イメージの取得"></a>イメージの取得</h3><p><a href="https://alpinelinux.org/downloads/" target="_blank" rel="noopener">本家ダウンロードサイト</a><br>alpine-standard-3.5.1-x86_64.iso</p>
+<h3 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h3><p>ESXi：5.5<br>OS：その他の Linux 2.6 64bit<br>Memory/CPU：デフォルト</p>
+<h3 id="初回起動"><a href="#初回起動" class="headerlink" title="初回起動"></a>初回起動</h3><p>以下の通りに root ログインし、セットアップコマンドを実行。</p>
 <p>localhost login: <code>root</code><br><code>setup-alpine</code></p>
 <p>その後対話に従うだけです。</p>
 <p>注意点は<a href="http://blog.stormcat.io/entry/alpine-entry-setup" target="_blank" rel="noopener">こちら</a>にある通り、<br>Which disk(s) would you like to use? (or ‘?’ for help or ‘none’) [none] : <code>sda</code><br>Hou would you like to use it? (‘sys’, ‘data, ‘lvm’ or ‘?’ for help) [?] : <code>sys</code><br>の2点です。</p>
-<p>###ssh の設定<br>本来よろしくないかもしれませんが root ユーザでそのまま ssh させます。<code>/etc/ssh/sshd_config</code>の設定から<br><code>PermitRootLogin yes</code><br>と変更。</p>
-<p>###つまずいた場所 - Docker がインストールできない</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@alpine ~# apk add docker</span><br><span class="line"><span class="keyword">ERROR: </span>unsatisfiable constraints:</span><br><span class="line">  docker (missing):</span><br><span class="line">    required by: world[docker]</span><br></pre></td></tr></table></figure>
+<h3 id="ssh-の設定"><a href="#ssh-の設定" class="headerlink" title="ssh の設定"></a>ssh の設定</h3><p>本来よろしくないかもしれませんが root ユーザでそのまま ssh させます。<code>/etc/ssh/sshd_config</code>の設定から<br><code>PermitRootLogin yes</code><br>と変更。</p>
+<h3 id="つまずいた場所-Docker-がインストールできない"><a href="#つまずいた場所-Docker-がインストールできない" class="headerlink" title="つまずいた場所 - Docker がインストールできない"></a>つまずいた場所 - Docker がインストールできない</h3><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@alpine ~# apk add docker</span><br><span class="line"><span class="keyword">ERROR: </span>unsatisfiable constraints:</span><br><span class="line">  docker (missing):</span><br><span class="line">    required by: world[docker]</span><br></pre></td></tr></table></figure>
 
 <p>####解決方法<br><a href="https://forums.docker.com/t/docker-apk-package-for-alpine-linux-has-an-unresolved-dependency-to-libseccomp/9604/4" target="_blank" rel="noopener">こちら</a>のフォーラムに書かれているように、<a href="http://nl.alpinelinux.org/alpine/edge/community/x86_64/" target="_blank" rel="noopener">edge community レポジトリ</a>を指定しないといけないようです。<br>知っていれば簡単ですね。</p>
 <p><code>apk add --no-cache  --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository  http://dl-cdn.alpinelinux.org/alpine/edge/community  docker</code></p>
-<p>###docker の proxy 越えの設定<br><code>/etc/init.d/docker</code> を編集して以下2つの export 文を追記。</p>
+<h3 id="docker-の-proxy-越えの設定"><a href="#docker-の-proxy-越えの設定" class="headerlink" title="docker の proxy 越えの設定"></a>docker の proxy 越えの設定</h3><p><code>/etc/init.d/docker</code> を編集して以下2つの export 文を追記。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/sbin/openrc-run</span></span><br><span class="line"><span class="comment"># Copyright 1999-2013 Gentoo Foundation</span></span><br><span class="line"><span class="comment"># Distributed under the terms of the GNU General Public License v2</span></span><br><span class="line"></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">http_proxy</span>=<span class="string">"&lt;ipaddr&gt;:&lt;port&gt;/"</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">https_proxy</span>=<span class="string">"&lt;ipaddr&gt;:&lt;port&gt;/"</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">command</span>=<span class="string">"<span class="variable">$&#123;DOCKERD_BINARY:-/usr/bin/dockerd&#125;</span>"</span></span><br><span class="line"><span class="attribute">pidfile</span>=<span class="string">"<span class="variable">$&#123;DOCKER_PIDFILE:-/run/$&#123;RC_SVCNAME&#125;</span>.pid&#125;"</span></span><br><span class="line"></span><br><span class="line">(以下略)</span><br></pre></td></tr></table></figure>
 
 <p>###確認</p>
