@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Docker を動かすための軽量 Linux、 Photon を試してみました | fascinated with tofu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###はじめに手前の mac 環境を汚さずにいろいろできる喜びもひとしおな docker for mac ですが、会社の検証環境とかでも使いたいなと思い始めて、特化した Linux を探し始めました。なんとなく検索で引っかかった photon なる OS powered by VMware を使ってみました。">
+<meta name="keywords" content="IT,docker,photon,elastic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker を動かすための軽量 Linux、 Photon を試してみました">
+<meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/index.html">
+<meta property="og:site_name" content="fascinated with tofu">
+<meta property="og:description" content="###はじめに手前の mac 環境を汚さずにいろいろできる喜びもひとしおな docker for mac ですが、会社の検証環境とかでも使いたいなと思い始めて、特化した Linux を探し始めました。なんとなく検索で引っかかった photon なる OS powered by VMware を使ってみました。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-03-16T07:30:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker を動かすための軽量 Linux、 Photon を試してみました">
+<meta name="twitter:description" content="###はじめに手前の mac 環境を汚さずにいろいろできる喜びもひとしおな docker for mac ですが、会社の検証環境とかでも使いたいなと思い始めて、特化した Linux を探し始めました。なんとなく検索で引っかかった photon なる OS powered by VMware を使ってみました。">
+  
+    <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head></html>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">fascinated with tofu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="www.fascinatedwithtofu.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-docker-photon-lightweight" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/04/docker-photon-lightweight/" class="article-date">
+  <time datetime="2017-02-03T17:02:46.000Z" itemprop="datePublished">2017-02-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IT/">IT</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker を動かすための軽量 Linux、 Photon を試してみました
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###はじめに<br>手前の mac 環境を汚さずにいろいろできる喜びもひとしおな docker for mac ですが、会社の検証環境とかでも使いたいなと思い始めて、特化した Linux を探し始めました。なんとなく検索で引っかかった photon なる OS powered by VMware を使ってみました。</p>
+<a id="more"></a>
+<p>Vine Linux や Elementary OS でも良かったのですが、ちょっと目的がデスクトップ寄りかなと思います。</p>
+<p>###イメージの入手<br><a href="https://vmware.github.io/photon/" target="_blank" rel="noopener">Photon OS by vmware</a><br>今回は手前の ESXi 環境（5.5）により Photon OS, Version 1.0 — OVA with virtual hardware v10 - A pre-installed and vSphere-optimized Photon OS minimal instance configured with virtual hardware version 10.を選択しました。<br>300MB 以下で小さい点ですでに好印象。　＜＜＜　あとで気付きますが、Alpine とか BusyBox とか上には上がいたようです・・・検索力↓<br><a href="https://speakerdeck.com/stormcat24/oqian-falsedockerimezihamadazhong-i" target="_blank" rel="noopener">お前のDockerイメージはまだ重い💢💢💢</a><br>ラズパイ等でも使われているようです。</p>
+<p>###インストール<br>ESXi 5.5.0<br>ゲストOS：その他の 3.x Linux (64 ビット<br>CPU：1 vCPU （あとでちゃんと見ると2 vCPU 推奨とのこと。）<br>MEM：8192 MB<br>としました。<br><a href="https://communities.vmware.com/people/gowatana/blog/2015/04/22/vmware-photon-linux-%E3%81%AE-install-docker-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E8%B5%B7%E5%8B%95" target="_blank" rel="noopener">VMware Photon Linux の Install ～ Docker コンテナ起動。</a><br><a href="http://techblog.clara.jp/2015/04/vmware-photon_how_to_install/" target="_blank" rel="noopener">http://techblog.clara.jp/2015/04/vmware-photon_how_to_install/</a></p>
+<p>###とりあえず初期設定<br>vSphere Client でコンソールからログインします。<br>username/password = root/changeme ですが、初回に変更を求められます。</p>
+<p>次に、ssh するために useradd / passwd しました。</p>
+<p>起動したときから DHCP でネットワーク周りの設定はもらえているようでしたのでそこは今回触れませんでした。<br>余談ですが、他の軽量 Linux だとデフォルトで DHCP じゃないものがあったので、ラボでさっと試すには便利です。</p>
+<p>###とりあえず yum update…と思ったら yum がない<br>Photon は TDNF というパッケージ管理システムに置き換わっています。<br>じゃあこれが何なのかというと、Tiny な DNF です。<br>DNF とは Dandified Yum のことらしいです。Python 2 ベースでかかれ、依存関係解決がときどき失敗してしまうという Yum の抱える諸問題を解決されるために生まれた事実上の後継とのこと。詳しくは<a href="https://ja.wikipedia.org/wiki/DNF_(%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2)" target="_blank" rel="noopener">Wikipedia</a>へどうぞ。</p>
+<p>Tiny DNF は、<a href="https://github.com/vmware/tdnf" target="_blank" rel="noopener">Github</a> を見ると vmware さんが作られてるみたいです。Photon 用ですかね。<br>README を読むと、repo の追加もできるようです。</p>
+<blockquote>
+<p>Now configure repo files under /etc/yum.repos.d or your repodir following<br>.repo format of dnf/yum.</p>
+</blockquote>
+<blockquote>
+<p>yumでは /etc/yum.conf の[main]セクションにproxy=http://(hostname):(port)/と、あと必要ならproxy_username=(username)とproxy_password=(password)を追加するとプロキシを通すことができた。<br>DNFでは同じ内容を /etc/yum.conf ではなく /etc/dnf/dnf.conf の[main]セクションに書く。</p>
+</blockquote>
+<p>Photonでは <code>vi /etc/tdnf/tdnf.conf</code> というファイルがありそこに追記しました。<br>その後 <code>tdnf update -y</code> が成功しました。</p>
+<p><a href="http://qiita.com/yunano/items/eedd3da40d67394881a2" target="_blank" rel="noopener">yumからDNFへの移行</a><br><a href="https://docs.docker.com/engine/admin/systemd/" target="_blank" rel="noopener">本家サイト</a><br><a href="https://communities.vmware.com/people/gowatana/blog/2016/01/30/docker-hub-official-%E3%81%AE-vmware-photon-%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%8C%E5%85%AC%E9%96%8B%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F" target="_blank" rel="noopener">Docker Hub OFFICIAL の VMware Photon リポジトリが公開されました。</a></p>
+<p>###とりあえず Docker 起動<br>ssh 用ユーザでログインしたあと、<code>su</code> して root 権限になってから docker を触り始めました。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># <span class="selector-tag">rpm</span> <span class="selector-tag">-q</span> <span class="selector-tag">docker</span></span><br><span class="line"><span class="selector-tag">docker-1</span><span class="selector-class">.12</span><span class="selector-class">.6-1</span><span class="selector-class">.ph1</span><span class="selector-class">.x86_64</span></span><br></pre></td></tr></table></figure>
+
+<p><code>systemctl start docker</code></p>
+<p>再起動後も docker を最初から起動させる設定<br><code>systemctl enable docker</code></p>
+<figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker version</span></span><br><span class="line"><span class="attribute">Client:</span></span><br><span class="line"><span class="attribute">Version</span>:      1.12.6</span><br><span class="line"><span class="attribute">API version</span>:  1.24</span><br><span class="line"><span class="attribute">Go version</span>:   go1.6.4</span><br><span class="line"><span class="attribute">Git commit</span>:   78d1802</span><br><span class="line"><span class="attribute">Built</span>:        Wed Jan 11 00:23:16 2017</span><br><span class="line"><span class="attribute">OS/Arch</span>:      linux/amd64</span><br><span class="line"></span><br><span class="line"><span class="attribute">Server:</span></span><br><span class="line"><span class="attribute">Version</span>:      1.12.6</span><br><span class="line"><span class="attribute">API version</span>:  1.24</span><br><span class="line"><span class="attribute">Go version</span>:   go1.6.4</span><br><span class="line"><span class="attribute">Git commit</span>:   78d1802</span><br><span class="line"><span class="attribute">Built</span>:        Wed Jan 11 00:23:16 2017</span><br><span class="line"><span class="attribute">OS/Arch</span>:      linux/amd64</span><br></pre></td></tr></table></figure>
+
+<p>###Proxy 設定<br>渡しの場合、Proxy の背後にある環境だったため、docker pull image が失敗しました。<br><a href="http://qiita.com/tora470/items/cd9335f5ce638e11bb97" target="_blank" rel="noopener">Proxy環境下のDockerトラブルシューティング</a>　 &lt;&lt;&lt;　こちらは役に立たなかった<br><a href="http://qiita.com/chi9rin/items/3326442bc02d4dca4669" target="_blank" rel="noopener">Proxy 環境下での Docker の使用方法（Docker デーモンが systemd に管理されている場合）</a>　&lt;&lt;&lt; 役に立ちました。</p>
+<p><code>vi /lib/systemd/system/docker.service</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Environment</span>=<span class="string">'http_proxy=http://&lt;ipaddr&gt;:8080'</span>  </span><br><span class="line"><span class="attr">Environment</span>=<span class="string">'NO_PROXY=localhost,127.0.0.0/8'</span></span><br></pre></td></tr></table></figure>
+
+<p><code>systemctl daemon-reload</code></p>
+<p>####Proxy 別の手段<br><code>/lib/systemd/system/docker.service</code>のなかにEnvironmentFileの記述があります。<br>この配下に追加したい環境情報を置くこともできます。<br>vi /etc/systemd/system/docker.service.d/http-proxy.conf </p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">"HTTP_PROXY=http://&lt;ipaddr&gt;:8080"</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">"NO_PROXY=localhost,127.0.0.0/8"</span></span><br></pre></td></tr></table></figure>
+
+<p>####確認<br>systemctl show docker | grep Envi<br>Environment=HTTP_PROXY=http://<ipaddr> NO_PROXY=localhost,127.0.0.0/8<br>EnvironmentFile=/etc/default/docker (ignore_errors=yes)</ipaddr></p>
+<p>###Docker が起動しない！？<br><code>docker image pull</code>している途中で以下のエラーが出ました。<br>unauthorized: authentication required<br><a href="http://qiita.com/youhei_nakagawa/items/d7bf1e83008e9ed0c68e" target="_blank" rel="noopener">http://qiita.com/youhei_nakagawa/items/d7bf1e83008e9ed0c68e</a></p>
+<p>再起動したらなんか動いた。<br>Bridge がおかしいとこうなるらしいです。以下記録までにログ</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl status docker.service -l</span></span><br><span class="line">● docker.service - Docker Daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: enabled)</span><br><span class="line">   Active: failed (Result: exit-code) since Thu 2017-02-02 23:36:21 UTC; 28s ago</span><br><span class="line">     Docs: http://docs.docker.com</span><br><span class="line">  Process: 752 ExecStart=/usr/bin/docker daemon $DOCKER_OPTS <span class="comment">--containerd /run/containerd.sock (code=exited, status=1/FAILURE)</span></span><br><span class="line">Main PID: 752 (code=exited, status=1/FAILURE)</span><br><span class="line"></span><br><span class="line">Feb 02 23:36:21 photon-pZJ8MxSIT docker[752]: time="2017-02-02T23:36:21.875670834Z" level=warning msg="Running modprobe bridge br_netfilter failed <span class="keyword">with</span> message: , <span class="keyword">error</span>: <span class="keyword">exit</span> <span class="keyword">status</span> <span class="number">1</span><span class="string">"</span></span><br><span class="line"><span class="string">Feb 02 23:36:21 photon-pZJ8MxSIT docker[752]: time="</span><span class="number">2017</span><span class="number">-02</span><span class="number">-02</span>T23:<span class="number">36</span>:<span class="number">21.877054039</span>Z<span class="string">" level=warning msg="</span>Running modprobe nf_nat <span class="keyword">failed</span> <span class="keyword">with</span> message: <span class="string">``</span>, <span class="keyword">error</span>: <span class="keyword">exit</span> <span class="keyword">status</span> <span class="number">1</span><span class="string">"</span></span><br><span class="line"><span class="string">Feb 02 23:36:21 photon-pZJ8MxSIT docker[752]: time="</span><span class="number">2017</span><span class="number">-02</span><span class="number">-02</span>T23:<span class="number">36</span>:<span class="number">21.878371360</span>Z<span class="string">" level=warning msg="</span>Running modprobe xt_conntrack <span class="keyword">failed</span> <span class="keyword">with</span> message: <span class="string">``</span>, <span class="keyword">error</span>: <span class="keyword">exit</span> <span class="keyword">status</span> <span class="number">1</span><span class="string">"</span></span><br><span class="line"><span class="string">Feb 02 23:36:21 photon-pZJ8MxSIT docker[752]: time="</span><span class="number">2017</span><span class="number">-02</span><span class="number">-02</span>T23:<span class="number">36</span>:<span class="number">21.880835972</span>Z<span class="string">" level=info msg="</span>Firewalld running: <span class="literal">false</span><span class="string">"</span></span><br><span class="line"><span class="string">Feb 02 23:36:21 photon-pZJ8MxSIT docker[752]: time="</span><span class="number">2017</span><span class="number">-02</span><span class="number">-02</span>T23:<span class="number">36</span>:<span class="number">21.922047885</span>Z<span class="string">" level=info msg="</span><span class="keyword">Default</span> bridge (docker0) <span class="keyword">is</span> assigned <span class="keyword">with</span> an IP address <span class="number">172.17</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">16.</span> Daemon <span class="keyword">option</span> <span class="comment">--bip can be used to set a preferred IP address"</span></span><br><span class="line">Feb <span class="number">02</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">21</span> photon-pZJ8MxSIT docker[<span class="number">752</span>]: <span class="built_in">time</span>=<span class="string">"2017-02-02T23:36:21.923904455Z"</span> <span class="keyword">level</span>=fatal msg=<span class="string">"Error starting daemon: Error initializing network controller: Error creating default \"bridge\" network: package not installed"</span></span><br><span class="line">Feb <span class="number">02</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">21</span> photon-pZJ8MxSIT systemd[<span class="number">1</span>]: docker.service: <span class="keyword">Main</span> process exited, code=exited, <span class="keyword">status</span>=<span class="number">1</span>/<span class="keyword">FAILURE</span></span><br><span class="line">Feb <span class="number">02</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">21</span> photon-pZJ8MxSIT systemd[<span class="number">1</span>]: <span class="keyword">Failed</span> <span class="keyword">to</span> <span class="keyword">start</span> Docker Daemon.</span><br><span class="line">Feb <span class="number">02</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">21</span> photon-pZJ8MxSIT systemd[<span class="number">1</span>]: docker.service: Unit entered <span class="keyword">failed</span> state.</span><br><span class="line">Feb <span class="number">02</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">21</span> photon-pZJ8MxSIT systemd[<span class="number">1</span>]: docker.service: <span class="keyword">Failed</span> <span class="keyword">with</span> <span class="keyword">result</span> <span class="string">'exit-code'</span>.</span><br></pre></td></tr></table></figure>
+
+<p>###Elasticsearch 公式 Docker を使わないのか?<br>おっしゃる通りです。使ってみました。<br><a href="http://d.hatena.ne.jp/Kazuhira/20161223/1482500406" target="_blank" rel="noopener">ElasticのDockerイメージを使って、ElasticsearchとKibanaを使う</a><br>起動しました。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">curl -GET <span class="string">http:</span><span class="comment">//localhost:9200</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span> : <span class="string">"GvpRqg9"</span>,</span><br><span class="line">  <span class="string">"cluster_name"</span> : <span class="string">"elasticsearch"</span>,</span><br><span class="line">  <span class="string">"cluster_uuid"</span> : <span class="string">"-1CASI3tTDeS642FvtMvrA"</span>,</span><br><span class="line">  <span class="string">"version"</span> : &#123;</span><br><span class="line">    <span class="string">"number"</span> : <span class="string">"5.2.0"</span>,</span><br><span class="line">    <span class="string">"build_hash"</span> : <span class="string">"24e05b9"</span>,</span><br><span class="line">    <span class="string">"build_date"</span> : <span class="string">"2017-01-24T19:52:35.800Z"</span>,</span><br><span class="line">    <span class="string">"build_snapshot"</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"lucene_version"</span> : <span class="string">"6.4.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"tagline"</span> : <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>###さいごに<br>さくさく挙動してくれて、tdnf で従来通りいろいろ足せるので、普段使いには良さそうだなと思いました。<br>Alpine Linux も後日試してみます。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/" data-id="cjz0x6fpi000ekjuq6a4aee18" class="article-share-link" data-share="baidu" data-title="Docker を動かすための軽量 Linux、 Photon を試してみました">Share</a>
+      
+
+      
+        <a href="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elastic/">elastic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/photon/">photon</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/04/lipservice-vol9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【ライブレポート】リップサービス vol.9＠渋谷JZBrat 2017/02/01
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/02/hexo-matome/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hexo と Github Pages で簡単シンプルブログを作成するときに参考にさせてもらったサイトまとめ</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/02/04/docker-photon-lightweight/" data-title="Docker を動かすための軽量 Linux、 Photon を試してみました" data-url="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/blog/">blog</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/scraping/">scraping</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/">essay</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/essay/book/">book</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/movie/">movie</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/music/">music</a><span class="category-list-count">6</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/">IT</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/">alpine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/">amazon associate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/">apple affiliate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/">book</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/can/">can</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/">chef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/">elastic</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/">elk</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/">essay</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/">gas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/">google adsense</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/">live</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/">logstash</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/">movie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/">netflow</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/">photon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/">sauna</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/">scraping</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/">security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/">slack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/">squid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/">vagrant</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/IT/" style="font-size: 20px;">IT</a> <a href="/tags/alpine/" style="font-size: 10px;">alpine</a> <a href="/tags/amazon-associate/" style="font-size: 10px;">amazon associate</a> <a href="/tags/apple/" style="font-size: 10px;">apple</a> <a href="/tags/apple-affiliate/" style="font-size: 10px;">apple affiliate</a> <a href="/tags/book/" style="font-size: 12.5px;">book</a> <a href="/tags/can/" style="font-size: 10px;">can</a> <a href="/tags/car/" style="font-size: 10px;">car</a> <a href="/tags/chef/" style="font-size: 10px;">chef</a> <a href="/tags/docker/" style="font-size: 13.75px;">docker</a> <a href="/tags/elastic/" style="font-size: 15px;">elastic</a> <a href="/tags/elk/" style="font-size: 15px;">elk</a> <a href="/tags/essay/" style="font-size: 18.75px;">essay</a> <a href="/tags/gas/" style="font-size: 10px;">gas</a> <a href="/tags/git/" style="font-size: 11.25px;">git</a> <a href="/tags/google-adsense/" style="font-size: 10px;">google adsense</a> <a href="/tags/hexo/" style="font-size: 17.5px;">hexo</a> <a href="/tags/kibana/" style="font-size: 12.5px;">kibana</a> <a href="/tags/live/" style="font-size: 11.25px;">live</a> <a href="/tags/logstash/" style="font-size: 12.5px;">logstash</a> <a href="/tags/movie/" style="font-size: 11.25px;">movie</a> <a href="/tags/music/" style="font-size: 16.25px;">music</a> <a href="/tags/netflow/" style="font-size: 12.5px;">netflow</a> <a href="/tags/photon/" style="font-size: 10px;">photon</a> <a href="/tags/ruby/" style="font-size: 12.5px;">ruby</a> <a href="/tags/sauna/" style="font-size: 10px;">sauna</a> <a href="/tags/scraping/" style="font-size: 15px;">scraping</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/slack/" style="font-size: 10px;">slack</a> <a href="/tags/squid/" style="font-size: 10px;">squid</a> <a href="/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/07/books-for-it-infra-newbies/">IT インフラ関連で新人に読んで欲しい本</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/11/hikkoshi-services-2017/">【雑記】引っ越しの振り返り〜引っ越しに役立つサービス逆引きリスト 2017年版〜</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/04/royhargrove-bluenote-2017/">【ライブレポート】Roy Hargrove Quintet＠Blue Note Tokyo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 mo&#39;better tofu<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編1 | fascinated with tofu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先ポスト↓からの続きです。前置きはいいよ！ということで実際にスクレイピングしていきます。しかしながら HTML の構造は、作り手とコンテンツ次第で千差万別です。（それ故スクレイピングには一通りの正解のようなものがないのだと思います）よってここからは、やりたいことごとにサンプルコードを実行して結果を見てみたいと思います。 ###環境初っ端からはしょって申し訳ありませんが、スクレイピングの手段として、">
+<meta name="keywords" content="IT,scraping,ruby">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編1">
+<meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/01/09/scraping2/index.html">
+<meta property="og:site_name" content="fascinated with tofu">
+<meta property="og:description" content="先ポスト↓からの続きです。前置きはいいよ！ということで実際にスクレイピングしていきます。しかしながら HTML の構造は、作り手とコンテンツ次第で千差万別です。（それ故スクレイピングには一通りの正解のようなものがないのだと思います）よってここからは、やりたいことごとにサンプルコードを実行して結果を見てみたいと思います。 ###環境初っ端からはしょって申し訳ありませんが、スクレイピングの手段として、">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108005048.png">
+<meta property="og:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108013438.png">
+<meta property="og:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108010639.png">
+<meta property="og:updated_time" content="2017-03-16T07:26:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編1">
+<meta name="twitter:description" content="先ポスト↓からの続きです。前置きはいいよ！ということで実際にスクレイピングしていきます。しかしながら HTML の構造は、作り手とコンテンツ次第で千差万別です。（それ故スクレイピングには一通りの正解のようなものがないのだと思います）よってここからは、やりたいことごとにサンプルコードを実行して結果を見てみたいと思います。 ###環境初っ端からはしょって申し訳ありませんが、スクレイピングの手段として、">
+<meta name="twitter:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108005048.png">
+  
+    <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head></html>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">fascinated with tofu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="www.fascinatedwithtofu.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-scraping2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/09/scraping2/" class="article-date">
+  <time datetime="2017-01-09T06:24:07.000Z" itemprop="datePublished">2017-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IT/">IT</a>►<a class="article-category-link" href="/categories/IT/scraping/">scraping</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編1
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先ポスト↓からの続きです。<br>前置きはいいよ！ということで実際にスクレイピングしていきます。<br>しかしながら HTML の構造は、作り手とコンテンツ次第で千差万別です。（それ故スクレイピングには一通りの正解のようなものがないのだと思います）<br>よってここからは、やりたいことごとにサンプルコードを実行して結果を見てみたいと思います。</p>
+<p>###環境<br>初っ端からはしょって申し訳ありませんが、スクレイピングの手段として、Ruby, Nokogiri を使います。（Scrapy はコピペしかできない私にはまだ早かったです。）<br>・ruby 2.3.1p</p>
+<p>###やりたいこと1：基本サンプルの実行</p>
+<a id="more"></a>
+<p>Qiita で拾ってきたサンプル（URL を変更しました）。<br><a href="https://gist.github.com/b7d558c0e5dd4990b91516cfb306c67f:embed#gistb7d558c0e5dd4990b91516cfb306c67f" target="_blank" rel="noopener">Nokogiriで文字化けを防ぐ - Qiita</a></p>
+<figure class="highlight plain"><figcaption><span>sample1.rb</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># -- coding: utf-8</span><br><span class="line"></span><br><span class="line">require &quot;open-uri&quot;</span><br><span class="line">require &quot;rubygems&quot;</span><br><span class="line">require &quot;nokogiri&quot;</span><br><span class="line"></span><br><span class="line">url = &quot;https://filmarks.com/people/63083&quot;</span><br><span class="line"></span><br><span class="line">charset = nil</span><br><span class="line">html = open(url) do |f|</span><br><span class="line">　　charset = f.charset</span><br><span class="line">　　f.read</span><br><span class="line">end</span><br><span class="line">doc = Nokogiri::HTML.parse(html, nil, charset)</span><br><span class="line">p doc.title</span><br></pre></td></tr></table></figure>
+
+<p>実行します。<br><code>ruby samble1.rb</code><br>結果です。<br><code>&quot;宮沢りえの出演・関連映画作品・プロフィール | Filmarks&quot;</code><br>何をしたかというと、対象のウェブページのソースにおける、title 部分を取得してきたことになります。<br>ブラウザで右クリックして”View Page Source”となる部分です（画像は Chrome の例）<br><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108005048.png" alt="f:id:rrringress:20170108005048p:plain" title="f:id:rrringress:20170108005048p:plain"><br><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108013438.png" alt="f:id:rrringress:20170108013438p:plain" title="f:id:rrringress:20170108013438p:plain"></p>
+<p>###やりたいこと2：宮沢りえの出演映画を取得<br>次に、ちょっと応用です。スクレイピングでは何かの一覧を取得する利用例が多いです。<br>ここでは宮沢りえさんの出演映画をリストとして取得してみたいと思います。<br>今度はソースコードでもいいのですが、”デベロッパーツール”を使って、Xpath （DOM 構造における住所）を取得してみたいと思います。<br>試しに「湯を沸かすほどの熱い愛」はどこか確認してみます。<br>Chrome で、View  &gt; Developer &gt;  Developer Tools を表示します。<br>「▶」をたどって該当する場所を上記画像のように探し、右クリックで”Copy XPath”すると、クリップボードに /html/body/div[3]/div[2]/div/div[1]/h3 と保存されます。<br><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/r/rrringress/20170108/20170108010639.png" alt="f:id:rrringress:20170108010639p:plain" title="f:id:rrringress:20170108010639p:plain"><br>余談ですが、CSS を使って DOM の住所を指定したい場合は、”Copy Selector” を選びます。<br>先ほどの sample1.rb の最終行の puts するものを、xpath によって変更します。</p>
+<figure class="highlight plain"><figcaption><span>sample2.rb</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># -- coding: utf-8</span><br><span class="line">require &quot;open-uri&quot;</span><br><span class="line">require &quot;rubygems&quot;</span><br><span class="line">require &quot;nokogiri&quot;</span><br><span class="line"></span><br><span class="line">url = &quot;https://filmarks.com/people/63083&quot;</span><br><span class="line"></span><br><span class="line">charset = nil</span><br><span class="line">html = open(url) do |f|</span><br><span class="line">　　charset = f.charset</span><br><span class="line">　　f.read</span><br><span class="line">end</span><br><span class="line">doc = Nokogiri::HTML.parse(html, nil, charset)</span><br><span class="line"># doc.xpath(&quot;&lt;xpathで指定したい場所&gt;&quot;</span><br><span class="line"># doc.css(&quot;&lt;cssで指定したい場所&gt;&quot;)</span><br><span class="line">p doc.xpath(&quot;//html/body/div[3]/div[2]/div/div[1]/h3&quot;).text</span><br></pre></td></tr></table></figure>
+
+<p>実行します。<br><code>ruby samble2.rb</code><br>結果です。<br><code>&quot;湯を沸かすほどの熱い愛&quot;</code></p>
+<p>###やりたいこと3：宮沢りえの出演映画を一覧で取得<br>最後にもうちょっと応用です。これだけでは1タイトルしか取得できていませんので、次に繰り返し構文を用いて、同様の属性を持つものを順番に取得していきます。<br><strong>同様の属性とはこの場合何なのでしょうか？</strong> もう一度デベロッパーツールを参照します。<br>右隣りにある映画”TOO YOUNG TO DIE！ 若くして死ぬ”のタイトルを表示する XPATH は /html/body/div[3]/div[2]/div/div[2]/h3です。<br>先ほどと比較すると、h3 タグの手前の div がタイトルごとに変わっていくと推測されます。<br>（このあたりの具体的な方法から、あまりぐぐりきることができず、筆者は時間を浪費しました・・・orz）<br>似たようなツリーが多すぎて、もう少し丁寧に指定してあげたいときは、class を指定したりしますが、その際は以下を参考にしました。<br><a href="http://blog.bangboo.com/sub/xpath.html" target="_blank" rel="noopener">XPath Cheat Sheet</a><br><a href="http://d.hatena.ne.jp/otn/20090509/p1" target="_blank" rel="noopener">スクレイピングのためのNokogiri利用メモ - それはそれ。これはこれ。</a></p>
+<figure class="highlight plain"><figcaption><span>sample3.rb</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># -- coding: utf-8</span><br><span class="line"></span><br><span class="line">require &quot;open-uri&quot;</span><br><span class="line">require &quot;rubygems&quot;</span><br><span class="line">require &quot;nokogiri&quot;</span><br><span class="line"></span><br><span class="line">url = &quot;https://filmarks.com/people/63083&quot;</span><br><span class="line"></span><br><span class="line">charset = nil</span><br><span class="line">html = open(url) do |f|</span><br><span class="line">　　charset = f.charset</span><br><span class="line">　　f.read</span><br><span class="line">end</span><br><span class="line">doc = Nokogiri::HTML.parse(html, nil, charset)</span><br><span class="line">titles = doc.xpath(&quot;//html/body/div[3]/div[2]/div/div/h3&quot;)</span><br><span class="line">titles.each do |title|</span><br><span class="line">p title.text</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>実行します。<br><code>ruby samble3.rb</code><br>結果です。未鑑賞タイトルが多いですが、ひとまず言えることとして直近の2作品は最高でした。（鑑賞してお薦めできるものはリンク付けています。）</p>
+<figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"湯を沸かすほどの熱い愛"</span>  </span><br><span class="line"><span class="string">"TOO YOUNG TO DIE！ 若くして死ぬ"</span>   </span><br><span class="line"><span class="string">"トイレのピエタ"</span> </span><br><span class="line"><span class="string">"紙の月"</span>  </span><br><span class="line"><span class="string">"魔女の宅急便"</span>  </span><br><span class="line"><span class="string">"映画 謎解きはディナーのあとで"</span>  </span><br><span class="line"><span class="string">"The Moment -写真家の欲望-"</span>  </span><br><span class="line"><span class="string">"ブラックボード 〜時代と戦った教師たち〜／第一夜 軍国主義[未来]"</span>  </span><br><span class="line"><span class="string">"夢のまにまに"</span>  </span><br><span class="line"><span class="string">"ゼラチンシルバーLOVE"</span>  </span><br><span class="line"><span class="string">"オリヲン座からの招待状"</span>  </span><br><span class="line"><span class="string">"花よりもなほ"</span>  </span><br><span class="line"><span class="string">"晴れた家"</span>  </span><br><span class="line"><span class="string">"阿修羅城の瞳"</span>  </span><br><span class="line"><span class="string">"父と暮せば"</span>  </span><br><span class="line"><span class="string">"トニー滝谷"</span>  </span><br><span class="line"><span class="string">"北の国から 2002遺言"</span>  </span><br><span class="line"><span class="string">"たそがれ清兵衛"</span>  </span><br><span class="line"><span class="string">"ノートルダムの鐘 II"</span>  </span><br><span class="line"><span class="string">"うつつ"</span>  </span><br><span class="line"><span class="string">"華の愛 遊園驚夢"</span>  </span><br><span class="line"><span class="string">"釣りバカ日誌12 史上最大の有給休暇"</span>  </span><br><span class="line"><span class="string">"運転手の恋"</span>  </span><br><span class="line"><span class="string">"北の国から'</span><span class="number">98</span>時代<span class="string">"  </span></span><br><span class="line"><span class="string">"</span>北の国から<span class="string">'95秘密"</span>  </span><br><span class="line"><span class="string">"天守物語"</span>  </span><br><span class="line"><span class="string">"蛍の光"</span>  </span><br><span class="line"><span class="string">"四十七人の刺客"</span>  </span><br><span class="line"><span class="string">"欽ちゃんのシネマジャック3 ほのぼの編"</span>  </span><br><span class="line"><span class="string">"エロティックな関係"</span>  </span><br><span class="line"><span class="string">"豪姫"</span>  </span><br><span class="line"><span class="string">"どっちにするの。"</span>  </span><br><span class="line"><span class="string">"ぼくらの七日間戦争"</span></span><br></pre></td></tr></table></figure>
+
+<p>では、一つのページから複数の要素を取ってきたり、複数ページにまたがるスクレイピングをしたい場合についてはどうでしょうか？<br>長くなったため、次のポストで試してみたいと思います。</p>
+<p>###まとめ<br>簡易なスクレイピングのチュートリアルができました。<br>Filmarks さん、勝手に利用して申し訳ありませんでした。いつも愛用させていただいております。<br><a href="https://filmarks.com/" target="_blank" rel="noopener">filmarks.com</a><br>その他参照 <a href="http://www.nokogiri.org/tutorials/installing_nokogiri.html" target="_blank" rel="noopener">Nokogiri 本家サイト</a><br>映画.com でスクレイピングを実施している例 <a href="http://himaratsu.hatenablog.com/entry/2013/04/27/002249" target="_blank" rel="noopener">RubyのNokogiriを使ってサイトをスクレイピングする - Think Big Act Local</a></p>
+<p>書籍類 ー自動化や運用までの道のりについても触れられており、満足度の高い内容です。環境作りから丁寧に解説されています。</p>
+<iframe style="width: 120px; height: 240px;" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=rjohph-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00TO6KMEK&linkId=b32a15190df4c51e319cd2de0441a165" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+
+<iframe style="width: 120px; height: 240px;" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=rjohph-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B01N9ATXQU&linkId=126dc63d4508e72a1cdd2a83b78f2f43" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.fascinatedwithtofu.com/2017/01/09/scraping2/" data-id="cjz0x6fqi002tkjuqnwiyq2br" class="article-share-link" data-share="baidu" data-title="Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編1">Share</a>
+      
+
+      
+        <a href="http://www.fascinatedwithtofu.com/2017/01/09/scraping2/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ruby/">ruby</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scraping/">scraping</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/09/scraping3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/08/scraping1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Google 先生に聞いても意外とわからなかったウェブスクレイピング基礎編</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/01/09/scraping2/" data-title="Google 先生に聞いても意外とわからなかったウェブスクレイピング実践編1" data-url="http://www.fascinatedwithtofu.com/2017/01/09/scraping2/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/blog/">blog</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/scraping/">scraping</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/">essay</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/essay/book/">book</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/movie/">movie</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/music/">music</a><span class="category-list-count">6</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/">IT</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/">alpine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/">amazon associate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/">apple affiliate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/">book</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/can/">can</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/">chef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/">elastic</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/">elk</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/">essay</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/">gas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/">google adsense</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/">live</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/">logstash</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/">movie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/">netflow</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/">photon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/">sauna</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/">scraping</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/">security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/">slack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/">squid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/">vagrant</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/IT/" style="font-size: 20px;">IT</a> <a href="/tags/alpine/" style="font-size: 10px;">alpine</a> <a href="/tags/amazon-associate/" style="font-size: 10px;">amazon associate</a> <a href="/tags/apple/" style="font-size: 10px;">apple</a> <a href="/tags/apple-affiliate/" style="font-size: 10px;">apple affiliate</a> <a href="/tags/book/" style="font-size: 12.5px;">book</a> <a href="/tags/can/" style="font-size: 10px;">can</a> <a href="/tags/car/" style="font-size: 10px;">car</a> <a href="/tags/chef/" style="font-size: 10px;">chef</a> <a href="/tags/docker/" style="font-size: 13.75px;">docker</a> <a href="/tags/elastic/" style="font-size: 15px;">elastic</a> <a href="/tags/elk/" style="font-size: 15px;">elk</a> <a href="/tags/essay/" style="font-size: 18.75px;">essay</a> <a href="/tags/gas/" style="font-size: 10px;">gas</a> <a href="/tags/git/" style="font-size: 11.25px;">git</a> <a href="/tags/google-adsense/" style="font-size: 10px;">google adsense</a> <a href="/tags/hexo/" style="font-size: 17.5px;">hexo</a> <a href="/tags/kibana/" style="font-size: 12.5px;">kibana</a> <a href="/tags/live/" style="font-size: 11.25px;">live</a> <a href="/tags/logstash/" style="font-size: 12.5px;">logstash</a> <a href="/tags/movie/" style="font-size: 11.25px;">movie</a> <a href="/tags/music/" style="font-size: 16.25px;">music</a> <a href="/tags/netflow/" style="font-size: 12.5px;">netflow</a> <a href="/tags/photon/" style="font-size: 10px;">photon</a> <a href="/tags/ruby/" style="font-size: 12.5px;">ruby</a> <a href="/tags/sauna/" style="font-size: 10px;">sauna</a> <a href="/tags/scraping/" style="font-size: 15px;">scraping</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/slack/" style="font-size: 10px;">slack</a> <a href="/tags/squid/" style="font-size: 10px;">squid</a> <a href="/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/07/books-for-it-infra-newbies/">IT インフラ関連で新人に読んで欲しい本</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/11/hikkoshi-services-2017/">【雑記】引っ越しの振り返り〜引っ越しに役立つサービス逆引きリスト 2017年版〜</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/04/royhargrove-bluenote-2017/">【ライブレポート】Roy Hargrove Quintet＠Blue Note Tokyo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 mo&#39;better tofu<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
