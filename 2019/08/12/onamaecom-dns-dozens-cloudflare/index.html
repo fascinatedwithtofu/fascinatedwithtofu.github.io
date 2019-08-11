@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="fascinated with tofu">
 <meta property="og:description" content="はじめにいままで Github Pages をカスタムドメインにするために無料で使っていた DNS サービス Dozens が終了するため、移行先として Cloudflare を使って移行してみました。10月31日なんてもうすぐですね。 参照全サービス終了のお知らせ ｜ DNSを自由に簡単に。Dozens（ダズンズ）  サービス終了までのスケジュール・2019年3月1日（金）新規会員登録・有料プラ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-11T15:58:58.536Z">
+<meta property="og:updated_time" content="2019-08-11T16:06:07.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Github pages のカスタムドメインを Dozens から Cloudflare に無料移行">
 <meta name="twitter:description" content="はじめにいままで Github Pages をカスタムドメインにするために無料で使っていた DNS サービス Dozens が終了するため、移行先として Cloudflare を使って移行してみました。10月31日なんてもうすぐですね。 参照全サービス終了のお知らせ ｜ DNSを自由に簡単に。Dozens（ダズンズ）  サービス終了までのスケジュール・2019年3月1日（金）新規会員登録・有料プラ">
@@ -128,8 +128,7 @@ ga('send', 'pageview');
 <!-- tocstop -->
 
 <h3><span id="作業の流れ">作業の流れ</span></h3><p>１．Cloudflare のアカウント作成とAレコードの登録<br>２．お名前.com のネームサーバーの変更<br>３．確認</p>
-<h3><span id="cloudflare-の設定">Cloudflare の設定</span></h3><p>わかりやすく書かれているためまさにこのままやってもらえればよいかと思います。</p>
-<p><a href="https://qiita.com/noraworld/items/89dd85a434a7b759e00c" target="_blank" rel="noopener">GitHub Pages + CloudFlare で独自ドメインをSSL化する</a></p>
+<h3><span id="cloudflare-の設定">Cloudflare の設定</span></h3><p>わかりやすく書かれているためまさにこのままやってもらえればよいかと思います。<br><strong>参考</strong><br><a href="https://qiita.com/noraworld/items/89dd85a434a7b759e00c" target="_blank" rel="noopener">GitHub Pages + CloudFlare で独自ドメインをSSL化する</a></p>
 <h3><span id="お名前com-の設定">お名前.com の設定</span></h3><p>お名前.com Navi にログインして、<code>ドメイン設定 &gt; ネームサーバーの設定 &gt; ネームサーバーの変更</code> へ進みます。<br>変更したいドメインを選択して <code>他のネームサーバーを利用</code> タブを開きます。<br><code>ネームサーバー情報を入力</code> の欄に Cloudflare 設定で得られた DNS サーバの名前をすべて入力します。（例：hogehoge.ns.cloudflare.com）</p>
 <p><strong>参考</strong><br><a href="https://deep-blog.jp/engineer/7072/" target="_blank" rel="noopener">【CDN】Cloudflare（クラウドフレア）を利用</a></p>
 <h3><span id="確認">確認</span></h3><p>自分のドメインを <code>dig</code> コマンドで引いたときの Name Server が <code>nxX.dozens.com</code> ではなく <code>hogehoge.ns.cloudflare.com</code> になっていることを確認します。<br>タイミングにもよるかもしれませんが変更して数分以内に切り替わりました。</p>
