@@ -4,15 +4,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Tag: kibana | fascinated with tofu</title>
+  <title>Github pages のカスタムドメインを Dozens から Cloudflare に無料移行 | fascinated with tofu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="fascinated with tofu">
-<meta property="og:url" content="http://www.fascinatedwithtofu.com/tags/kibana/index.html">
+  <meta name="description" content="はじめにいままで Github Pages をカスタムドメインにするために無料で使っていた DNS サービス Dozens が終了するため、移行先として Cloudflare を使って移行してみました。10月31日なんてもうすぐですね。 参照サービス終了のお知らせ  ・2019年10月31日（木）DNSサーバーの停止・サービスの完全終了">
+<meta name="keywords" content="IT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github pages のカスタムドメインを Dozens から Cloudflare に無料移行">
+<meta property="og:url" content="http://www.fascinatedwithtofu.com/2019/08/12/onamaecom-dns-dozens-cloudflare/index.html">
 <meta property="og:site_name" content="fascinated with tofu">
+<meta property="og:description" content="はじめにいままで Github Pages をカスタムドメインにするために無料で使っていた DNS サービス Dozens が終了するため、移行先として Cloudflare を使って移行してみました。10月31日なんてもうすぐですね。 参照サービス終了のお知らせ  ・2019年10月31日（木）DNSサーバーの停止・サービスの完全終了">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-11T15:55:09.568Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fascinated with tofu">
+<meta name="twitter:title" content="Github pages のカスタムドメインを Dozens から Cloudflare に無料移行">
+<meta name="twitter:description" content="はじめにいままで Github Pages をカスタムドメインにするために無料で使っていた DNS サービス Dozens が終了するため、移行先として Cloudflare を使って移行してみました。10月31日なんてもうすぐですね。 参照サービス終了のお知らせ  ・2019年10月31日（木）DNSサーバーの停止・サービスの完全終了">
   
     <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
   
@@ -77,77 +82,93 @@ ga('send', 'pageview');
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/15/home-netflow-monitoring/" class="archive-article-date">
-  <time datetime="2017-02-14T15:55:12.000Z" itemprop="datePublished">Feb 15</time>
+      <section id="main"><article id="post-onamaecom-dns-dozens-cloudflare" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/12/onamaecom-dns-dozens-cloudflare/" class="article-date">
+  <time datetime="2019-08-11T15:32:54.975Z" itemprop="datePublished">2019-08-12</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/15/home-netflow-monitoring/">無料でできる自宅ネットワーク監視環境の構築</a>
+    <h1 class="article-title" itemprop="name">
+      Github pages のカスタムドメインを Dozens から Cloudflare に無料移行
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/26/elk-docker-deploy2/" class="archive-article-date">
-  <time datetime="2017-01-26T04:36:26.000Z" itemprop="datePublished">Jan 26</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/26/elk-docker-deploy2/">Docker for Mac 環境で簡単に ELK Stack をビルドする2</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/26/elk-docker-deploy1/" class="archive-article-date">
-  <time datetime="2017-01-26T04:29:00.000Z" itemprop="datePublished">Jan 26</time>
-</a>
+
+        <h3><span id="はじめに">はじめに</span></h3><p>いままで Github Pages をカスタムドメインにするために無料で使っていた DNS サービス <a href="https://dozens.jp/" target="_blank" rel="noopener">Dozens</a> が終了するため、移行先として Cloudflare を使って移行してみました。10月31日なんてもうすぐですね。</p>
+<p><strong>参照</strong><br><a href="https://dozens.jp/close/" target="_blank" rel="noopener">サービス終了のお知らせ</a></p>
+<blockquote>
+<p>・2019年10月31日（木）<br>DNSサーバーの停止・サービスの完全終了</p>
+</blockquote>
+<a id="more"></a>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#作業の流れ">作業の流れ</a></li>
+<li><a href="#cloudflare-の設定">Cloudflare の設定</a></li>
+<li><a href="#お名前com-の設定">お名前.com の設定</a></li>
+<li><a href="#確認">確認</a></li>
+</ul>
+<!-- tocstop -->
+
+<h3><span id="作業の流れ">作業の流れ</span></h3><p>１．Cloudflare のアカウント作成とAレコードの登録<br>２．お名前.com のネームサーバーの変更<br>３．確認</p>
+<h3><span id="cloudflare-の設定">Cloudflare の設定</span></h3><p>まさにこのままやってもらえればよいかと。<br><a href="https://qiita.com/noraworld/items/89dd85a434a7b759e00c" target="_blank" rel="noopener">GitHub Pages + CloudFlare で独自ドメインをSSL化する</a></p>
+<h3><span id="お名前com-の設定">お名前.com の設定</span></h3><p>お名前.com Navi にログインして、<code>ドメイン設定 &gt; ネームサーバーの設定 &gt; ネームサーバーの変更</code> へ進みます。<br>変更したいドメインを選択して <code>他のネームサーバーを利用</code> タブを開きます。<br><code>ネームサーバー情報を入力</code> の欄に Cloudflare 設定で得られた DNS サーバの名前をすべて入力します。（例：hogehoge.ns.cloudflare.com）</p>
+<p><strong>参考</strong><br><a href="https://deep-blog.jp/engineer/7072/" target="_blank" rel="noopener">【CDN】Cloudflare（クラウドフレア）を利用</a></p>
+<h3><span id="確認">確認</span></h3><p>自分のドメインを <code>dig</code> コマンドで引いたときの Name Server が <code>nxX.dozens.com</code> ではなく <code>hogehoge.ns.cloudflare.com</code> になっていることを確認します。タイニングにもよるかもしれませんが変更して数分以内に切り替わりました。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">) <span class="selector-tag">dig</span> <span class="selector-tag">fascinatedwithtofu</span><span class="selector-class">.com</span> +<span class="selector-tag">nostats</span> +<span class="selector-tag">nocomments</span> <span class="selector-tag">ns</span>     </span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; <span class="selector-tag">DiG</span> 9<span class="selector-class">.10</span><span class="selector-class">.6</span> &lt;&lt;&gt;&gt; <span class="selector-tag">fascinatedwithtofu</span><span class="selector-class">.com</span> +<span class="selector-tag">nostats</span> +<span class="selector-tag">nocomments</span> <span class="selector-tag">ns</span></span><br><span class="line">;; <span class="selector-tag">global</span> <span class="selector-tag">options</span>: +<span class="selector-tag">cmd</span></span><br><span class="line">;<span class="selector-tag">fascinatedwithtofu</span><span class="selector-class">.com</span>.		<span class="selector-tag">IN</span>	<span class="selector-tag">NS</span></span><br><span class="line"><span class="selector-tag">fascinatedwithtofu</span><span class="selector-class">.com</span>.	86400	<span class="selector-tag">IN</span>	<span class="selector-tag">NS</span>	<span class="selector-tag">hoge</span><span class="selector-class">.ns</span><span class="selector-class">.cloudflare</span><span class="selector-class">.com</span>.</span><br><span class="line"><span class="selector-tag">fascinatedwithtofu</span><span class="selector-class">.com</span>.	86400	<span class="selector-tag">IN</span>	<span class="selector-tag">NS</span>	<span class="selector-tag">fuga</span><span class="selector-class">.ns</span><span class="selector-class">.cloudflare</span><span class="selector-class">.com</span>.</span><br></pre></td></tr></table></figure>
+
+<p>おしまい</p>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/26/elk-docker-deploy1/">Docker for Mac 環境で簡単に ELK Stack をビルドする1</a>
-    </h1>
-  
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.fascinatedwithtofu.com/2019/08/12/onamaecom-dns-dozens-cloudflare/" data-id="cjz75c1wq002ft9uqu8sy5wv5" class="article-share-link">Share</a>
+      
 
-    </header>
+      
+        <a href="http://www.fascinatedwithtofu.com/2019/08/12/onamaecom-dns-dozens-cloudflare/#disqus_thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/">IT</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/09/speedtest-cli-splunk/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">家のインターネットの回線速度を speedtest-cli で観測する</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+  <section id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
 
 </section>
       
@@ -286,11 +307,13 @@ ga('send', 'pageview');
 <script>
   var disqus_shortname = 'tofu';
   
+  var disqus_url = 'http://www.fascinatedwithtofu.com/2019/08/12/onamaecom-dns-dozens-cloudflare/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
