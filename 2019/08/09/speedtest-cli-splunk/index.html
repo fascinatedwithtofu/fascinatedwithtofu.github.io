@@ -6,21 +6,21 @@
   
   <title>家のインターネットの回線速度を speedtest-cli で観測する | fascinated with tofu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っているspeedtestのコマンドラインツール版があると知り、定期実行して観測してみました。">
+  <meta name="description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っている speedtest のコマンドラインツール版があると知り、定期実行して観測してみました。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="家のインターネットの回線速度を speedtest-cli で観測する">
 <meta property="og:url" content="http://www.fascinatedwithtofu.com/2019/08/09/speedtest-cli-splunk/index.html">
 <meta property="og:site_name" content="fascinated with tofu">
-<meta property="og:description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っているspeedtestのコマンドラインツール版があると知り、定期実行して観測してみました。">
+<meta property="og:description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っている speedtest のコマンドラインツール版があると知り、定期実行して観測してみました。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://cldup.com/MPFjcqDTW2.png">
 <meta property="og:image" content="https://cldup.com/EhPQs6hJxi.png">
 <meta property="og:image" content="https://cldup.com/muNNYyKxqr.png">
 <meta property="og:image" content="https://cldup.com/DlNB09ZjuB.png">
-<meta property="og:updated_time" content="2019-08-11T14:53:53.884Z">
+<meta property="og:updated_time" content="2019-08-11T15:26:59.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="家のインターネットの回線速度を speedtest-cli で観測する">
-<meta name="twitter:description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っているspeedtestのコマンドラインツール版があると知り、定期実行して観測してみました。">
+<meta name="twitter:description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っている speedtest のコマンドラインツール版があると知り、定期実行して観測してみました。">
 <meta name="twitter:image" content="https://cldup.com/MPFjcqDTW2.png">
   
     <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
@@ -114,19 +114,21 @@ ga('send', 'pageview');
       
 
 
-  <div id="toc" class="toc-article">
-    <h3 class="toc-title">目次</h3>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#はじめに"><span class="toc-number">1.</span> <span class="toc-text">はじめに</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#speedtest-cli-のインストール"><span class="toc-number">2.</span> <span class="toc-text">speedtest-cli のインストール</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定期実行の設定"><span class="toc-number">2.1.</span> <span class="toc-text">定期実行の設定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#splunk-docker-の準備"><span class="toc-number">2.2.</span> <span class="toc-text">splunk (docker) の準備</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#結果"><span class="toc-number">2.3.</span> <span class="toc-text">結果</span></a></li></ol></li></ol>
-  </div>
-
-
-        <h3 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h3><p>集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。<br>インターネットが遅いなと感じたときにみんながよく使っている<a href="https://www.speedtest.net" target="_blank" rel="noopener">speedtest</a>のコマンドラインツール版があると知り、定期実行して観測してみました。</p>
+        <h3><span id="はじめに">はじめに</span></h3><p>集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。<br>インターネットが遅いなと感じたときにみんながよく使っている <a href="https://www.speedtest.net" target="_blank" rel="noopener">speedtest</a> のコマンドラインツール版があると知り、定期実行して観測してみました。</p>
 <a id="more"></a>
 
+<!-- toc -->
 
+<ul>
+<li><a href="#speedtest-cli-のインストール">speedtest-cli のインストール</a></li>
+<li><a href="#定期実行の設定">定期実行の設定</a></li>
+<li><a href="#splunk-docker-の準備">splunk (docker) の準備</a></li>
+<li><a href="#結果">結果</a></li>
+</ul>
+<!-- tocstop -->
 
-<h3 id="speedtest-cli-のインストール"><a href="#speedtest-cli-のインストール" class="headerlink" title="speedtest-cli のインストール"></a>speedtest-cli のインストール</h3><p><a href="https://qiita.com/CloudRemix/items/ad226ea4aa641427e682" target="_blank" rel="noopener">LinuxでもSpeedtestがしたい（speedtest-cli</a>を参考にさせてもらいながら、家の mac にインストールしました。<br><code>git clone</code>して該当する実行ファイルが<code>speedtest.py</code>が実行できればよさそうなので以下のようにしました。試しに実行した結果も少しマスクして載せておきます。</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">) # git clone https://github.com/sivel/speedtest-cli                                           </span><br><span class="line">Cloning into 'speedtest-cli'...</span><br><span class="line">remote: Enumerating objects: 3, done.</span><br><span class="line">remote: Counting objects: 100% (3/3), done.</span><br><span class="line">remote: Compressing objects: 100% (3/3), done.</span><br><span class="line">remote: Total 1153 (delta 0), reused 1 (delta 0), pack-reused 1150</span><br><span class="line">Receiving objects: 100% (1153/1153), 325.70 KiB | 619.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (684/684), done.</span><br><span class="line">) # cd speedtest-cli/                                                                           </span><br><span class="line">speedtest-cli) # ./speedtest.py                                                                         </span><br><span class="line">Retrieving speedtest.net configuration...</span><br><span class="line"><span class="keyword">Testing </span>from Softbank BB (x.x.x.x)...  </span><br><span class="line">Retrieving speedtest.net server list...</span><br><span class="line">Selecting best server based on ping...</span><br><span class="line">Hosted by GLBB Japan (Tokyo) [6.63 km]: 8.084 ms</span><br><span class="line"><span class="keyword">Testing </span>download speed................................................................................</span><br><span class="line">Download: 117.30 Mbit/s</span><br><span class="line"><span class="keyword">Testing </span>upload speed................................................................................................</span><br><span class="line">Upload: 190.38 Mbit/s</span><br></pre></td></tr></table></figure>
+<h3><span id="speedtest-cli-のインストール">speedtest-cli のインストール</span></h3><p><a href="https://qiita.com/CloudRemix/items/ad226ea4aa641427e682" target="_blank" rel="noopener">LinuxでもSpeedtestがしたい（speedtest-cli)</a> を参考にさせてもらいながら、家の mac にインストールしました。<br><code>git clone</code>して該当する実行ファイルが<code>speedtest.py</code>が実行できればよさそうなので以下のようにしました。試しに実行した結果も少しマスクして載せておきます。</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">) # git clone https://github.com/sivel/speedtest-cli                                           </span><br><span class="line">Cloning into 'speedtest-cli'...</span><br><span class="line">remote: Enumerating objects: 3, done.</span><br><span class="line">remote: Counting objects: 100% (3/3), done.</span><br><span class="line">remote: Compressing objects: 100% (3/3), done.</span><br><span class="line">remote: Total 1153 (delta 0), reused 1 (delta 0), pack-reused 1150</span><br><span class="line">Receiving objects: 100% (1153/1153), 325.70 KiB | 619.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (684/684), done.</span><br><span class="line">) # cd speedtest-cli/                                                                           </span><br><span class="line">speedtest-cli) # ./speedtest.py                                                                         </span><br><span class="line">Retrieving speedtest.net configuration...</span><br><span class="line"><span class="keyword">Testing </span>from Softbank BB (x.x.x.x)...  </span><br><span class="line">Retrieving speedtest.net server list...</span><br><span class="line">Selecting best server based on ping...</span><br><span class="line">Hosted by GLBB Japan (Tokyo) [6.63 km]: 8.084 m≈s</span><br><span class="line"><span class="keyword">Testing </span>download speed................................................................................</span><br><span class="line">Download: 117.30 Mbit/s</span><br><span class="line"><span class="keyword">Testing </span>upload speed................................................................................................</span><br><span class="line">Upload: 190.38 Mbit/s</span><br></pre></td></tr></table></figure>
 
 <p>その他の要件としては、<br>・インターネット速度の定点観測という趣旨なので、テスト用サーバは固定する(今回は IPA さん <code>14263</code> にしてみた)<br>・可視化しやすいように CSV エクスポートする</p>
 <p>ということで、実行コマンドは以下<br><code>./speedtest.py --server 14623 --csv &gt;&gt; result.csv</code></p>
@@ -136,10 +138,10 @@ ga('send', 'pageview');
 <p>そのため、<code>./speedtest.py</code>の結果と見比べて、あらかじめ一行目にラベルを入れておきます。名前は適当です。最後から二番目の値が欠けているのも謎です。</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">id</span>,test_server,city,<span class="built_in">date</span>,distance,rtt,download,upload,,ip</span><br></pre></td></tr></table></figure>
 
-<h4 id="定期実行の設定"><a href="#定期実行の設定" class="headerlink" title="定期実行の設定"></a>定期実行の設定</h4><p>30分に一回取得する cron の設定をします。実行は絶対パスで記載する点に注意します。</p>
+<h3><span id="定期実行の設定">定期実行の設定</span></h3><p>30分に一回取得する cron の設定をします。実行は絶対パスで記載する点に注意します。</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br><span class="line">*<span class="string">/30</span> * * * * python ~<span class="string">/speedtest-cli/speedtest.py</span> <span class="params">--server</span> 14623 <span class="params">--csv</span> &gt;&gt; ~<span class="string">/speedtest-cli/result.csv</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="splunk-docker-の準備"><a href="#splunk-docker-の準備" class="headerlink" title="splunk (docker) の準備"></a>splunk (docker) の準備</h4><p>CSV をかんたんに時系列データとして可視化する方法として、今回は splunk を利用します。使い捨てのプロセスの感覚で、Docker 上で立てます。<br>ローカルディレクトリを Docker コンテナから参照させたいため、以下の記事を参考にコンテナを起動します。<br><a href="https://qiita.com/Yarimizu14/items/52f4859027165a805630" target="_blank" rel="noopener">【Docker】Dockerでホストのディレクトリをマウントする</a></p>
+<h3><span id="splunk-docker-の準備">splunk (docker) の準備</span></h3><p>CSV をかんたんに時系列データとして可視化する方法として、今回は splunk を利用します。使い捨てのプロセスの感覚で、Docker 上で立てます。<br>ローカルディレクトリを Docker コンテナから参照させたいため、以下の記事を参考にコンテナを起動します。<br><a href="https://qiita.com/Yarimizu14/items/52f4859027165a805630" target="_blank" rel="noopener">【Docker】Dockerでホストのディレクトリをマウントする</a></p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p <span class="number">8000</span>:<span class="number">8000</span> -e <span class="string">"SPLUNK_START_ARGS=--accept-license"</span> -e <span class="string">"SPLUNK_PASSWORD=hogehoge"</span> -v  ~<span class="regexp">/speedtest-cli:/</span>opt<span class="regexp">/splunk/</span>etc splunk<span class="regexp">/splunk</span></span><br></pre></td></tr></table></figure>
 
 <p>起動後は <code>http://localhost:8000</code> にアクセスして、データ参照設定をします。</p>
@@ -147,7 +149,7 @@ ga('send', 'pageview');
 <p><code>Local inputs &gt; File &amp; Directories &gt; Add new</code><br><img src="https://cldup.com/EhPQs6hJxi.png" alt></p>
 <p>ここで Browse から先程マウントしたディレクトリを参照して、<code>result.csv</code> を選択します。その他の設定はそのままでどんどん進んでいけば大丈夫です。</p>
 <p><img src="https://cldup.com/muNNYyKxqr.png" alt></p>
-<h4 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h4><p>時系列に表示するため <code>timechart</code> コマンドを使います。</p>
+<h3><span id="結果">結果</span></h3><p>時系列に表示するため <code>timechart</code> 関数を使います。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">host</span>=e02bb3812356 | eval <span class="attribute">download_mb</span>=download/1000000 | timechart avg(download_mb)</span><br></pre></td></tr></table></figure>
 
 <p>CSV の場合ダウンロードとアップロードの速度が生の数字 (Bit/sec) で表示されるため、わかりやすくメガ (MBit/sec) に変換するため、<code>eval</code> 関数で1000000で割っています。たまたま hostname で引っ掛けてますが他のインプットデータがないので「*」とかでもよいです。<br><img src="https://cldup.com/DlNB09ZjuB.png" alt></p>

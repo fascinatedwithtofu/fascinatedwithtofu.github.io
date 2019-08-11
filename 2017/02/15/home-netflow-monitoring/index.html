@@ -114,12 +114,6 @@ ga('send', 'pageview');
       
 
 
-  <div id="toc" class="toc-article">
-    <h3 class="toc-title">目次</h3>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#話さないこと"><span class="toc-number">1.</span> <span class="toc-text">話さないこと</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-number">2.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#監視する必要はあるの？"><span class="toc-number">3.</span> <span class="toc-text">監視する必要はあるの？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#なぜ-ELK-を選択したか"><span class="toc-number">4.</span> <span class="toc-text">なぜ ELK を選択したか</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELKでできること"><span class="toc-number">5.</span> <span class="toc-text">ELKでできること</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我が家の監視環境の動作概要と構成"><span class="toc-number">6.</span> <span class="toc-text">我が家の監視環境の動作概要と構成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logstach-の設定例"><span class="toc-number">7.</span> <span class="toc-text">Logstach の設定例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#実際に作ったダッシュボード例"><span class="toc-number">8.</span> <span class="toc-text">実際に作ったダッシュボード例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#その他気付けたこと"><span class="toc-number">9.</span> <span class="toc-text">その他気付けたこと</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">10.</span> <span class="toc-text">参考</span></a></li></ol>
-  </div>
-
-
         <p>なぜか<a href="http://www.fascinatedwithtofu.com/2015/08/24/netflow/">2015年に書いたこの記事</a>だけ検索による流入が毎日ぽつぽつあります。その補足というか顛末を書いておきたいと思います。<br>(書いていて改めて思いますが、当時やっていた設定は本当に面倒だなと思います。<a href="http://www.fascinatedwithtofu.com/2017/02/08/alpine-docker-deploy/">前記事で紹介したalpine</a>や<a href="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/">photon</a>のような存在を活用できる現在が有難いです。)</p>
 <p>自宅ネットワークにおいて、NetFlow や Syslog を無料で手軽に可視化してみたく、Elasticsearch / Logstash / Kibana （a.k.a ELK Stack）を使って Netflow コレクタ兼 Syslog サーバを自作しました（2015年〜）。<br>GUI や気付けたことを振り返ってご紹介します。</p>
 <a id="more"></a>
