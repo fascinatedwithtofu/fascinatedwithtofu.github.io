@@ -18,7 +18,8 @@
 <meta property="og:image" content="https://cldup.com/EhPQs6hJxi.png">
 <meta property="og:image" content="https://cldup.com/muNNYyKxqr.png">
 <meta property="og:image" content="https://cldup.com/DlNB09ZjuB.png">
-<meta property="og:updated_time" content="2019-08-11T15:56:15.981Z">
+<meta property="og:image" content="https://cldup.com/qZde7VY41J.png">
+<meta property="og:updated_time" content="2019-08-15T14:20:30.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="家のインターネットの回線速度を speedtest-cli で観測する">
 <meta name="twitter:description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っている speedtest のコマンドラインツール版があると知り、定期実行して観測してみました。">
@@ -155,6 +156,7 @@ ga('send', 'pageview');
 
 <p>CSV の場合ダウンロードとアップロードの速度が生の数字 (Bit/sec) で表示されるため、わかりやすくメガ (MBit/sec) に変換するため、<code>eval</code> 関数で1000000で割っています。たまたま hostname で引っ掛けてますが他のインプットデータがないので「*」とかでもよいです。<br><img src="https://cldup.com/DlNB09ZjuB.png" alt></p>
 <p>集合住宅タイプの光フレッツなので夜はなんとなく遅いなと感じていたが、夜間と昼間でそこまで差がなかったのが意外。</p>
+<p>(2019/08/15追記)<br>7日間の傾向を <code>span=30min</code> で見てみたら、特に下りは時間帯で傾向がありそう。PM7:00~AM2:30あたりで急速に下り速度が落ちることがわかる。<br>にしても初日だけ500を超えていて、その後最大速度が下り250MB、上り200MBで頭打ちになっているように見える。詐欺・・・<br><img src="https://cldup.com/qZde7VY41J.png" alt></p>
 
       
     </div>
