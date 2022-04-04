@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>軽量コンテナ用 OS  alpline に dockerを入れるまで | fascinated with tofu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 はじめにこちらとこちらをそのままなぞりインストールしました。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="軽量コンテナ用 OS  alpline に dockerを入れるまで">
+<meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/02/08/alpine-docker-deploy/index.html">
+<meta property="og:site_name" content="fascinated with tofu">
+<meta property="og:description" content="前ポストの photon に引き続きライトな環境を試しましたのでメモ。さくさくしていてよい。余談ですが、ここで初めて触った fish というシェル環境を、普段使い用 mac でも使い始めました。 はじめにこちらとこちらをそのままなぞりインストールしました。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cldup.com/szWK6B-qOJ.png">
+<meta property="og:image" content="https://cldup.com/vAMhjoumJz.jpg">
+<meta property="article:published_time" content="2017-02-08T08:08:43.000Z">
+<meta property="article:modified_time" content="2019-08-09T08:32:05.000Z">
+<meta property="article:author" content="mo&#39;better tofu">
+<meta property="article:tag" content="alpine">
+<meta property="article:tag" content="IT">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cldup.com/szWK6B-qOJ.png">
+  
+    <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-7036741-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">fascinated with tofu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+#      </nav>
+#      <div id="search-form-wrap">
+#        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+#          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+#          <input type="submit" value="" class="search-form-submit">
+#          <input name=tn type=hidden value="bds">
+#          <input name=cl type=hidden value="3">
+#          <input name=ct type=hidden value="2097152">
+#          <input type="hidden" name="si" value="www.fascinatedwithtofu.com">
+#        </form>
+#      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-alpine-docker-deploy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/08/alpine-docker-deploy/" class="article-date">
+  <time datetime="2017-02-08T08:08:43.000Z" itemprop="datePublished">2017-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IT/">IT</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      軽量コンテナ用 OS  alpline に dockerを入れるまで
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+        <p><a href="http://www.fascinatedwithtofu.com/2017/02/04/docker-photon-lightweight/">前ポストの photon</a> に引き続きライトな環境を試しましたのでメモ。<br>さくさくしていてよい。<br>余談ですが、ここで初めて触った <a target="_blank" rel="noopener" href="http://fishshell.com/docs/current/tutorial.html">fish</a> というシェル環境を、普段使い用 mac でも使い始めました。<br><img src="https://cldup.com/szWK6B-qOJ.png" alt></p>
+<h3><span id="はじめに">はじめに</span></h3><p><a target="_blank" rel="noopener" href="http://qiita.com/kmry2045/items/d15e3f60bff8806f193f">こちら</a>と<a target="_blank" rel="noopener" href="http://blog.stormcat.io/entry/alpine-entry-setup">こちら</a>をそのままなぞりインストールしました。</p>
+<span id="more"></span>
+
+<h3><span id="イメージの取得">イメージの取得</span></h3><p><a target="_blank" rel="noopener" href="https://alpinelinux.org/downloads/">本家ダウンロードサイト</a><br>alpine-standard-3.5.1-x86_64.iso</p>
+<h3><span id="環境">環境</span></h3><p>ESXi：5.5<br>OS：その他の Linux 2.6 64bit<br>Memory/CPU：デフォルト</p>
+<h3><span id="初回起動">初回起動</span></h3><p>以下の通りに root ログインし、セットアップコマンドを実行。</p>
+<p>localhost login: <code>root</code><br><code>setup-alpine</code></p>
+<p>その後対話に従うだけです。</p>
+<p>注意点は<a target="_blank" rel="noopener" href="http://blog.stormcat.io/entry/alpine-entry-setup">こちら</a>にある通り、<br>Which disk(s) would you like to use? (or ‘?’ for help or ‘none’) [none] : <code>sda</code><br>Hou would you like to use it? (‘sys’, ‘data, ‘lvm’ or ‘?’ for help) [?] : <code>sys</code><br>の2点です。</p>
+<h3><span id="ssh-の設定">ssh の設定</span></h3><p>本来よろしくないかもしれませんが root ユーザでそのまま ssh させます。<code>/etc/ssh/sshd_config</code>の設定から<br><code>PermitRootLogin yes</code><br>と変更。</p>
+<h3><span id="つまずいた場所-docker-がインストールできない">つまずいた場所 - Docker がインストールできない</span></h3><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@alpine ~# apk add docker</span><br><span class="line"><span class="keyword">ERROR: </span>unsatisfiable constraints:</span><br><span class="line">  docker (missing):</span><br><span class="line">    required by: world[docker]</span><br></pre></td></tr></table></figure>
+
+<p>####解決方法<br><a target="_blank" rel="noopener" href="https://forums.docker.com/t/docker-apk-package-for-alpine-linux-has-an-unresolved-dependency-to-libseccomp/9604/4">こちら</a>のフォーラムに書かれているように、<a target="_blank" rel="noopener" href="http://nl.alpinelinux.org/alpine/edge/community/x86_64/">edge community レポジトリ</a>を指定しないといけないようです。<br>知っていれば簡単ですね。</p>
+<p><code>apk add --no-cache  --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository  http://dl-cdn.alpinelinux.org/alpine/edge/community  docker</code></p>
+<h3><span id="docker-の-proxy-越えの設定">docker の proxy 越えの設定</span></h3><p><code>/etc/init.d/docker</code> を編集して以下2つの export 文を追記。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/sbin/openrc-run</span></span><br><span class="line"><span class="comment"># Copyright 1999-2013 Gentoo Foundation</span></span><br><span class="line"><span class="comment"># Distributed under the terms of the GNU General Public License v2</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">http_proxy</span>=<span class="string">&quot;&lt;ipaddr&gt;:&lt;port&gt;/&quot;</span></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">https_proxy</span>=<span class="string">&quot;&lt;ipaddr&gt;:&lt;port&gt;/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">command</span>=<span class="string">&quot;<span class="variable">$&#123;DOCKERD_BINARY:-/usr/bin/dockerd&#125;</span>&quot;</span></span><br><span class="line"><span class="attribute">pidfile</span>=<span class="string">&quot;<span class="variable">$&#123;DOCKER_PIDFILE:-/run/$&#123;RC_SVCNAME&#125;</span>.pid&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">(以下略)</span><br></pre></td></tr></table></figure>
+
+
+<p>###確認</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@alpine ~<span class="meta"># service docker start</span></span><br><span class="line">* Caching service dependencies ...                                                                                                                                             [ ok ]</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: creating file</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: correcting mode</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: correcting <span class="built_in">owner</span></span><br><span class="line">ulimit: unrecognized option: u</span><br><span class="line">* Starting docker ...   </span><br><span class="line"></span><br><span class="line">root@alpine ~<span class="meta"># docker run --name ng  -p 80:80 nginx</span></span><br><span class="line">Unable <span class="keyword">to</span> <span class="built_in">find</span> <span class="built_in">image</span> <span class="string">&#x27;nginx:latest&#x27;</span> locally</span><br><span class="line">latest: Pulling <span class="keyword">from</span> library/nginx</span><br><span class="line"><span class="number">5040</span>bd298390: Already exists</span><br><span class="line"><span class="number">333547110842</span>: Pull complete</span><br><span class="line"><span class="number">4</span>df1e44d2a7a: Pull complete</span><br><span class="line">Digest: sha256:f2d384a6ca8ada733df555be3edc427f2e5f285ebf468aae940843de8cf74645</span><br><span class="line">Status: Downloaded newer <span class="built_in">image</span> <span class="keyword">for</span> nginx:latest</span><br><span class="line">hogehoge - - [<span class="number">08</span>/Feb/<span class="number">2017</span>:<span class="number">05</span>:<span class="number">45</span>:<span class="number">13</span> +<span class="number">0000</span>] <span class="string">&quot;GET / HTTP/1.1&quot;</span> <span class="number">200</span> <span class="number">612</span> <span class="string">&quot;-&quot;</span> <span class="string">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&quot;</span> <span class="string">&quot;-&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>iptables はデフォルトで stop していたので、そとから <code>http://&lt;alpine&#39;s ipaddr&gt;/</code> をつつくことができます。<br><img src="https://cldup.com/vAMhjoumJz.jpg" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.fascinatedwithtofu.com/2017/02/08/alpine-docker-deploy/" data-id="cl1k6u5vc0000lh1kcdf9ac6v" class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://www.fascinatedwithtofu.com/2017/02/08/alpine-docker-deploy/#disqus_thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/" rel="tag">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/15/home-netflow-monitoring/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          無料でできる自宅ネットワーク監視環境の構築
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/04/lipservice-vol9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【ライブレポート】リップサービス vol.9＠渋谷JZBrat 2017/02/01</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Search</h3>
+    <div class="widget">
+      <!-- ad start -->
+      <script async src="https://cse.google.com/cse.js?cx=011529624253112925832:uqtadov3ack"></script>
+<div class="gcse-search"></div>
+
+      <!-- ad end -->
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/blog/">blog</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/scraping/">scraping</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/">essay</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/essay/book/">book</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/movie/">movie</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/music/">music</a><span class="category-list-count">6</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/" rel="tag">IT</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/" rel="tag">book</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/can/" rel="tag">can</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/" rel="tag">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/" rel="tag">music</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/12/onamaecom-dns-dozens-cloudflare/">Github pages のカスタムドメインを Dozens から Cloudflare に無料移行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/speedtest-cli-splunk/">家のインターネットの回線速度を speedtest-cli で観測する</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/07/books-for-it-infra-newbies/">IT インフラ関連で新人に読んで欲しい本</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://tofu.hatenadiary.com/" target="_blank">hatena</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">sponsor</h3>
+    <div class="widget">
+      <!-- ad start -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- adunit2-text-responseive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1208598955299803"
+     data-ad-slot="7084188191"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      <!-- ad end -->
+    </div>
+  </div>
+
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 mo&#39;better tofu<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<script>
+  var disqus_shortname = 'tofu';
+  
+  var disqus_url = 'http://www.fascinatedwithtofu.com/2017/02/08/alpine-docker-deploy/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</div>
+</body>
+</html>

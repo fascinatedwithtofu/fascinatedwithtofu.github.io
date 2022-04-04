@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>家のインターネットの回線速度を speedtest-cli で観測する | fascinated with tofu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っている speedtest のコマンドラインツール版があると知り、定期実行して観測してみました。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="家のインターネットの回線速度を speedtest-cli で観測する">
+<meta property="og:url" content="http://www.fascinatedwithtofu.com/2019/08/09/speedtest-cli-splunk/index.html">
+<meta property="og:site_name" content="fascinated with tofu">
+<meta property="og:description" content="はじめに集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。インターネットが遅いなと感じたときにみんながよく使っている speedtest のコマンドラインツール版があると知り、定期実行して観測してみました。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cldup.com/MPFjcqDTW2.png">
+<meta property="og:image" content="https://cldup.com/EhPQs6hJxi.png">
+<meta property="og:image" content="https://cldup.com/muNNYyKxqr.png">
+<meta property="og:image" content="https://cldup.com/DlNB09ZjuB.png">
+<meta property="og:image" content="https://cldup.com/qZde7VY41J.png">
+<meta property="article:published_time" content="2019-08-08T15:00:00.000Z">
+<meta property="article:modified_time" content="2019-08-15T14:20:30.000Z">
+<meta property="article:author" content="mo&#39;better tofu">
+<meta property="article:tag" content="IT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cldup.com/MPFjcqDTW2.png">
+  
+    <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-7036741-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">fascinated with tofu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+#      </nav>
+#      <div id="search-form-wrap">
+#        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+#          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+#          <input type="submit" value="" class="search-form-submit">
+#          <input name=tn type=hidden value="bds">
+#          <input name=cl type=hidden value="3">
+#          <input name=ct type=hidden value="2097152">
+#          <input type="hidden" name="si" value="www.fascinatedwithtofu.com">
+#        </form>
+#      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-speedtest-cli-splunk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/09/speedtest-cli-splunk/" class="article-date">
+  <time datetime="2019-08-08T15:00:00.000Z" itemprop="datePublished">2019-08-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IT/">IT</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      家のインターネットの回線速度を speedtest-cli で観測する
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+        <h3><span id="はじめに">はじめに</span></h3><p>集合住宅のインターネットは利用者が少ない昼間は比較的すいていて、夜間は混雑していることが多いらしい。<br>インターネットが遅いなと感じたときにみんながよく使っている <a target="_blank" rel="noopener" href="https://www.speedtest.net">speedtest</a> のコマンドラインツール版があると知り、定期実行して観測してみました。</p>
+<span id="more"></span>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#speedtest-cli-のインストール">speedtest-cli のインストール</a></li>
+<li><a href="#定期実行の設定">定期実行の設定</a></li>
+<li><a href="#splunk-docker-の準備">splunk (docker) の準備</a></li>
+<li><a href="#結果の可視化">結果の可視化</a></li>
+</ul>
+<!-- tocstop -->
+
+<h3><span id="speedtest-cli-のインストール">speedtest-cli のインストール</span></h3><p><a target="_blank" rel="noopener" href="https://qiita.com/CloudRemix/items/ad226ea4aa641427e682">LinuxでもSpeedtestがしたい（speedtest-cli)</a> を参考にさせてもらいながら、家の mac にインストールしました。<br><code>git clone</code>して該当する実行ファイルが<code>speedtest.py</code>が実行できればよさそうなので以下のようにしました。試しに実行した結果も少しマスクして載せておきます。</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">) # git clone https://github.com/sivel/speedtest-cli                                           </span><br><span class="line">Cloning into &#x27;speedtest-cli&#x27;...</span><br><span class="line">remote: Enumerating objects: 3, done.</span><br><span class="line">remote: Counting objects: 100% (3/3), done.</span><br><span class="line">remote: Compressing objects: 100% (3/3), done.</span><br><span class="line">remote: Total 1153 (delta 0), reused 1 (delta 0), pack-reused 1150</span><br><span class="line">Receiving objects: 100% (1153/1153), 325.70 KiB | 619.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (684/684), done.</span><br><span class="line">) # cd speedtest-cli/                                                                           </span><br><span class="line">speedtest-cli) # ./speedtest.py                                                                         </span><br><span class="line">Retrieving speedtest.net configuration...</span><br><span class="line"><span class="keyword">Testing </span>from Softbank BB (x.x.x.x)...  </span><br><span class="line">Retrieving speedtest.net server list...</span><br><span class="line">Selecting best server based on ping...</span><br><span class="line">Hosted by GLBB Japan (Tokyo) [6.63 km]: 8.084 m≈s</span><br><span class="line"><span class="keyword">Testing </span>download speed................................................................................</span><br><span class="line">Download: 117.30 Mbit/s</span><br><span class="line"><span class="keyword">Testing </span>upload speed................................................................................................</span><br><span class="line">Upload: 190.38 Mbit/s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>その他の要件としては、<br>・インターネット速度の定点観測という趣旨なので、テスト用サーバは固定する(今回は IPA さん <code>14263</code> にしてみた)<br>・可視化しやすいように CSV エクスポートする</p>
+<p>ということで、実行コマンドは以下<br><code>./speedtest.py --server 14623 --csv &gt;&gt; result.csv</code></p>
+<p>CSV エクスポートした場合は以下のような出力となる</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">14623</span>,IPA CyberLab,Bunkyo,<span class="number">2019</span>-<span class="number">08</span>-<span class="number">11</span>T10:<span class="number">58</span>:<span class="number">53</span>.<span class="number">465639</span>Z,<span class="number">10</span>.<span class="number">824939774573073</span>,<span class="number">5</span>.<span class="number">235</span>,<span class="number">216961778</span>.<span class="number">00509918</span>,<span class="number">167021284</span>.<span class="number">0664986</span>,,x.x.x.x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>そのため、<code>./speedtest.py</code>の結果と見比べて、あらかじめ一行目にラベルを入れておきます。名前は適当です。最後から二番目の値が欠けているのも謎です。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">id</span>,test_server,city,<span class="built_in">date</span>,distance,rtt,download,upload,,ip</span><br></pre></td></tr></table></figure>
+
+
+<h3><span id="定期実行の設定">定期実行の設定</span></h3><p>30分に一回取得する cron の設定をします。実行は絶対パスで記載する点に注意します。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab -l</span><br><span class="line">*<span class="string">/30</span> * * * * python ~<span class="string">/speedtest-cli/speedtest.py</span> <span class="params">--server</span> 14623 <span class="params">--csv</span> &gt;&gt; ~<span class="string">/speedtest-cli/result.csv</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3><span id="splunk-docker-の準備">splunk (docker) の準備</span></h3><p>CSV をかんたんに時系列データとして可視化する方法として、今回は splunk を利用します。使い捨てのプロセスの感覚で、Docker 上で立てます。<br>ローカルディレクトリを Docker コンテナから参照させたいため、以下の記事を参考にコンテナを起動します。<br><a target="_blank" rel="noopener" href="https://qiita.com/Yarimizu14/items/52f4859027165a805630">【Docker】Dockerでホストのディレクトリをマウントする</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p <span class="number">8000</span>:<span class="number">8000</span> -e <span class="string">&quot;SPLUNK_START_ARGS=--accept-license&quot;</span> -e <span class="string">&quot;SPLUNK_PASSWORD=hogehoge&quot;</span> -v  ~<span class="regexp">/speedtest-cli:/</span>opt<span class="regexp">/splunk/</span>etc splunk/splunk</span><br></pre></td></tr></table></figure>
+
+<p>起動後は <code>http://localhost:8000</code> にアクセスして、データ参照設定をします。</p>
+<p><code>Settings &gt; DATA &gt; Data inputs</code><br><img src="https://cldup.com/MPFjcqDTW2.png" alt></p>
+<p><code>Local inputs &gt; File &amp; Directories &gt; Add new</code><br><img src="https://cldup.com/EhPQs6hJxi.png" alt></p>
+<p>ここで Browse から先程マウントしたディレクトリを参照して、<code>result.csv</code> を選択します。その他の設定はそのままでどんどん進んでいけば大丈夫です。</p>
+<p><img src="https://cldup.com/muNNYyKxqr.png" alt></p>
+<h3><span id="結果の可視化">結果の可視化</span></h3><p>時系列に表示するため <code>timechart</code> 関数を使います。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">host</span>=e02bb3812356 | eval <span class="attribute">download_mb</span>=download/1000000 | timechart avg(download_mb)</span><br></pre></td></tr></table></figure>
+
+<p>CSV の場合ダウンロードとアップロードの速度が生の数字 (Bit/sec) で表示されるため、わかりやすくメガ (MBit/sec) に変換するため、<code>eval</code> 関数で1000000で割っています。たまたま hostname で引っ掛けてますが他のインプットデータがないので「*」とかでもよいです。<br><img src="https://cldup.com/DlNB09ZjuB.png" alt></p>
+<p>集合住宅タイプの光フレッツなので夜はなんとなく遅いなと感じていたが、夜間と昼間でそこまで差がなかったのが意外。</p>
+<p>(2019/08/15追記)<br>7日間の傾向を <code>span=30min</code> で見てみたら、特に下りは時間帯で傾向がありそう。PM7:00~AM2:30あたりで急速に下り速度が落ちることがわかる。<br>にしても初日だけ500を超えていて、その後最大速度が下り250MB、上り200MBで頭打ちになっているように見える。詐欺・・・<br><img src="https://cldup.com/qZde7VY41J.png" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.fascinatedwithtofu.com/2019/08/09/speedtest-cli-splunk/" data-id="cl1k6u5x90031lh1kb1p41rxl" class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://www.fascinatedwithtofu.com/2019/08/09/speedtest-cli-splunk/#disqus_thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/" rel="tag">IT</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/12/onamaecom-dns-dozens-cloudflare/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Github pages のカスタムドメインを Dozens から Cloudflare に無料移行
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/07/books-for-it-infra-newbies/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">IT インフラ関連で新人に読んで欲しい本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Search</h3>
+    <div class="widget">
+      <!-- ad start -->
+      <script async src="https://cse.google.com/cse.js?cx=011529624253112925832:uqtadov3ack"></script>
+<div class="gcse-search"></div>
+
+      <!-- ad end -->
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/blog/">blog</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/scraping/">scraping</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/">essay</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/essay/book/">book</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/movie/">movie</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/music/">music</a><span class="category-list-count">6</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/" rel="tag">IT</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/" rel="tag">book</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/can/" rel="tag">can</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/" rel="tag">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/" rel="tag">music</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/12/onamaecom-dns-dozens-cloudflare/">Github pages のカスタムドメインを Dozens から Cloudflare に無料移行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/speedtest-cli-splunk/">家のインターネットの回線速度を speedtest-cli で観測する</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/07/books-for-it-infra-newbies/">IT インフラ関連で新人に読んで欲しい本</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://tofu.hatenadiary.com/" target="_blank">hatena</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">sponsor</h3>
+    <div class="widget">
+      <!-- ad start -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- adunit2-text-responseive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1208598955299803"
+     data-ad-slot="7084188191"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      <!-- ad end -->
+    </div>
+  </div>
+
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 mo&#39;better tofu<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<script>
+  var disqus_shortname = 'tofu';
+  
+  var disqus_url = 'http://www.fascinatedwithtofu.com/2019/08/09/speedtest-cli-splunk/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</div>
+</body>
+</html>

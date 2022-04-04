@@ -1,0 +1,11 @@
+User-agent: *
+Sitemap: http://fascinatedwithtofu.com/sitemap.xml
+Sitemap: http://fascinatedwithtofu.com/post-sitemap.xml
+Sitemap: http://fascinatedwithtofu.com/tag-sitemap.xml
+
+User-agent: bingbot
+Crawl-delay: 30
+
+User-agent: MSNBOT
+Crawl-delay: 30
+

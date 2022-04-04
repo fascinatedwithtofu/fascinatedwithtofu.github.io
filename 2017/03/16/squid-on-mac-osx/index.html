@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>3分で Mac OS X に squid プロキシをたてる | fascinated with tofu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="不定期にローカルネットワーク内で作業する機会に恵まれる。そうしたとき大抵 yum や online license 認証的なことが必要となり、なし崩し的に「そうだ、Squid たてよう」となる。 最新の brew はとても便利で、すぐにおれおれ proxy が立てられたのでメモがてらどうぞ。 ＊日本語の技術ブログをいくつか参考にさせてもらったのだが、開始・停止コマンドだけ新しくなっていそうなのでそ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3分で Mac OS X に squid プロキシをたてる">
+<meta property="og:url" content="http://www.fascinatedwithtofu.com/2017/03/16/squid-on-mac-osx/index.html">
+<meta property="og:site_name" content="fascinated with tofu">
+<meta property="og:description" content="不定期にローカルネットワーク内で作業する機会に恵まれる。そうしたとき大抵 yum や online license 認証的なことが必要となり、なし崩し的に「そうだ、Squid たてよう」となる。 最新の brew はとても便利で、すぐにおれおれ proxy が立てられたのでメモがてらどうぞ。 ＊日本語の技術ブログをいくつか参考にさせてもらったのだが、開始・停止コマンドだけ新しくなっていそうなのでそ">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cldup.com/BGIezgs82I.png">
+<meta property="article:published_time" content="2017-03-16T06:35:19.000Z">
+<meta property="article:modified_time" content="2019-08-09T08:41:37.000Z">
+<meta property="article:author" content="mo&#39;better tofu">
+<meta property="article:tag" content="IT">
+<meta property="article:tag" content="squid">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cldup.com/BGIezgs82I.png">
+  
+    <link rel="alternative" href="/atom.xml" title="fascinated with tofu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-7036741-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">fascinated with tofu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+#      </nav>
+#      <div id="search-form-wrap">
+#        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+#          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+#          <input type="submit" value="" class="search-form-submit">
+#          <input name=tn type=hidden value="bds">
+#          <input name=cl type=hidden value="3">
+#          <input name=ct type=hidden value="2097152">
+#          <input type="hidden" name="si" value="www.fascinatedwithtofu.com">
+#        </form>
+#      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-squid-on-mac-osx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/16/squid-on-mac-osx/" class="article-date">
+  <time datetime="2017-03-16T06:35:19.000Z" itemprop="datePublished">2017-03-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/IT/">IT</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      3分で Mac OS X に squid プロキシをたてる
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+        <p>不定期にローカルネットワーク内で作業する機会に恵まれる。<br>そうしたとき大抵 yum や online license 認証的なことが必要となり、なし崩し的に「そうだ、Squid たてよう」となる。<br><img src="https://cldup.com/BGIezgs82I.png" alt></p>
+<p>最新の brew はとても便利で、すぐにおれおれ proxy が立てられたのでメモがてらどうぞ。</p>
+<p>＊日本語の技術ブログをいくつか参考にさせてもらったのだが、開始・停止コマンドだけ新しくなっていそうなのでそこだけ真新しさがある記事。</p>
+<span id="more"></span>
+
+<h3><span id="前提条件">前提条件</span></h3><p>・Mac OS X 10.11.6 （わたしが）<br>・homebrew 環境あり</p>
+<h3><span id="インストールと-post-install-メッセージ">インストールと post install メッセージ</span></h3><p><code>brew install squid</code>  </p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Updating Homebrew...</span><br><span class="line">&lt;snip&gt;</span><br><span class="line">To have launchd start squid now <span class="keyword">and </span>restart <span class="built_in">at</span> login:  </span><br><span class="line">  <span class="keyword">brew </span>services start squid  </span><br><span class="line"><span class="keyword">Or, </span>if you don<span class="string">&#x27;t want/need a background service you can just run:  </span></span><br><span class="line"><span class="string">  squid  </span></span><br><span class="line"><span class="string">&lt;snip&gt;  </span></span><br></pre></td></tr></table></figure>
+
+
+<h3><span id="設定ファイルの編集">設定ファイルの編集</span></h3><p>おそらく大半の人が触らなくていいのでは？<br>設定変更したい場合、参照を見ていただければそちらの方が詳しい。</p>
+<p>私の場合は、以下のみ追記した。</p>
+<p><code>vi /usr/local/etc/squid.conf</code></p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acl localnet src <span class="keyword">X</span>.<span class="keyword">X</span>.<span class="keyword">X</span>.<span class="keyword">X</span>/YY   &lt;= 今回たまたまイレギュラーな IP レンジがローカルネットに存在したため追記</span><br></pre></td></tr></table></figure>
+
+<h3><span id="サービス開始">サービス開始</span></h3><p>上のメッセージに従おう。</p>
+<p><code>brew services start squid</code></p>
+<p>ただし、メッセージにあるような <code>squid</code> コマンドは使えず。</p>
+<p>ここで、下に貼った<code>brew services</code> を読むと、</p>
+<blockquote>
+<p>   [sudo] brew services run formula|–all<br>   Run the service formula without starting at login (or boot).  </p>
+</blockquote>
+<p>とあるので、正確には一時的にサービス開始コマンド<br><code>brew services run squid</code><br>サービス自動起動コマンドが以下<br><code>brew services start squid</code><br>だと思われた。</p>
+<p>紛らわしいことに両方とも開始語のメッセージは同じだった。</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew services start squid</span><br><span class="line">=<span class="language-ruby">=&gt; Successfully started <span class="string">`squid`</span> (<span class="symbol">label:</span> homebrew.mxcl.squid)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew services run squid</span><br><span class="line">=<span class="language-ruby">=&gt; Successfully started <span class="string">`squid`</span> (<span class="symbol">label:</span> homebrew.mxcl.squid)</span></span><br></pre></td></tr></table></figure>
+
+
+<h3><span id="サービス停止">サービス停止</span></h3><p>こちらは共通のよう。</p>
+<p><code>brew services stop squid</code></p>
+<h3><span id="おまけbrew-services-command">おまけ：brew services command</span></h3><p>初めて使った。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#brew services</span></span><br><span class="line">brew services  </span><br><span class="line">    Easily start <span class="keyword">and</span> stop formulae via launchctl</span><br><span class="line"></span><br><span class="line">    Integrates Homebrew formulae <span class="keyword">with</span> OS X&#x27;s launchctl manager. Services can be</span><br><span class="line">    added <span class="keyword">to</span> either /Library/LaunchDaemons <span class="keyword">or</span> ~/Library/LaunchAgents.</span><br><span class="line">    Basically, items <span class="keyword">in</span> /Library/LaunchDaemons are started <span class="keyword">at</span> boot, <span class="keyword">while</span> those</span><br><span class="line">    <span class="keyword">in</span> ~/Library/LaunchAgents are started <span class="keyword">at</span> login.</span><br><span class="line"></span><br><span class="line">    When started <span class="keyword">with</span> sudo, <span class="keyword">it</span> operates <span class="keyword">on</span> /Library/LaunchDaemons; otherwise,</span><br><span class="line">    <span class="keyword">it</span> operates <span class="keyword">on</span> ~/Library/LaunchAgents.</span><br><span class="line"></span><br><span class="line">    On start <span class="keyword">the</span> plist <span class="built_in">file</span> <span class="keyword">is</span> generated <span class="keyword">and</span> written <span class="keyword">to</span> a Tempfile, <span class="keyword">and</span> <span class="keyword">then</span></span><br><span class="line">    copied <span class="keyword">to</span> <span class="keyword">the</span> <span class="built_in">launch</span> path (existing plists are overwritten).</span><br><span class="line"></span><br><span class="line">    [sudo] brew services <span class="built_in">list</span></span><br><span class="line">    List all <span class="built_in">running</span> services <span class="keyword">for</span> <span class="keyword">the</span> current user (<span class="keyword">or</span> root)</span><br><span class="line"></span><br><span class="line">    [sudo] brew services <span class="built_in">run</span> formula|<span class="comment">--all</span></span><br><span class="line">    Run <span class="keyword">the</span> service formula <span class="keyword">without</span> starting <span class="keyword">at</span> login (<span class="keyword">or</span> boot).</span><br><span class="line"></span><br><span class="line">    [sudo] brew services start formula|<span class="comment">--all</span></span><br><span class="line">    Install <span class="keyword">and</span> start <span class="keyword">the</span> service formula <span class="keyword">at</span> login (<span class="keyword">or</span> boot).</span><br><span class="line"></span><br><span class="line">    [sudo] brew services stop formula|<span class="comment">--all</span></span><br><span class="line">    Stop <span class="keyword">the</span> service formula <span class="keyword">after</span> <span class="keyword">it</span> was launched <span class="keyword">at</span> login (<span class="keyword">or</span> boot).</span><br><span class="line"></span><br><span class="line">    [sudo] brew services restart formula|<span class="comment">--all</span></span><br><span class="line">    Stop (<span class="keyword">if</span> necessary), install <span class="keyword">and</span> start <span class="keyword">the</span> service formula <span class="keyword">at</span> login (<span class="keyword">or</span> boot).</span><br><span class="line"></span><br><span class="line">    [sudo] brew services cleanup</span><br><span class="line">    Remove all unused services.</span><br></pre></td></tr></table></figure>
+
+<p>例えば自動起動設定しているサービスのリストは以下。<br><code>brew services list</code></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew services list</span><br><span class="line">Name    Status  <span class="keyword">User</span> <span class="title">Plist</span></span><br><span class="line">dnsmasq <span class="literal">stopped</span>      </span><br><span class="line">squid   <span class="literal">stopped</span>      </span><br></pre></td></tr></table></figure>
+
+<h3><span id="参照">参照</span></h3><p><a target="_blank" rel="noopener" href="http://qiita.com/kmats@github/items/8a41c942e079c7a95919">http://qiita.com/kmats@github/items/8a41c942e079c7a95919</a></p>
+<p><a target="_blank" rel="noopener" href="http://qiita.com/mtakayuki/items/6869fa4760afc9a659e9">http://qiita.com/mtakayuki/items/6869fa4760afc9a659e9</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.fascinatedwithtofu.com/2017/03/16/squid-on-mac-osx/" data-id="cl1k6u5xa0034lh1kfufsdlm8" class="article-share-link">Share</a>
+      
+
+      
+        <a href="http://www.fascinatedwithtofu.com/2017/03/16/squid-on-mac-osx/#disqus_thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/" rel="tag">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/squid/" rel="tag">squid</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/16/money-book-for-beginners/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【読書】山崎元のお金入門本二冊を読んだ感想
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/08/lalaland-jazz-history/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【雑記】La La Land における違和感の正体をジャズ史から考える</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Search</h3>
+    <div class="widget">
+      <!-- ad start -->
+      <script async src="https://cse.google.com/cse.js?cx=011529624253112925832:uqtadov3ack"></script>
+<div class="gcse-search"></div>
+
+      <!-- ad end -->
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/blog/">blog</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/scraping/">scraping</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/">essay</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/essay/book/">book</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/movie/">movie</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/essay/music/">music</a><span class="category-list-count">6</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/" rel="tag">IT</a><span class="tag-list-count">29</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/" rel="tag">book</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/can/" rel="tag">can</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/car/" rel="tag">car</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/" rel="tag">music</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/12/onamaecom-dns-dozens-cloudflare/">Github pages のカスタムドメインを Dozens から Cloudflare に無料移行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/09/speedtest-cli-splunk/">家のインターネットの回線速度を speedtest-cli で観測する</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/07/books-for-it-infra-newbies/">IT インフラ関連で新人に読んで欲しい本</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://tofu.hatenadiary.com/" target="_blank">hatena</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">sponsor</h3>
+    <div class="widget">
+      <!-- ad start -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- adunit2-text-responseive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1208598955299803"
+     data-ad-slot="7084188191"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      <!-- ad end -->
+    </div>
+  </div>
+
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 mo&#39;better tofu<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<script>
+  var disqus_shortname = 'tofu';
+  
+  var disqus_url = 'http://www.fascinatedwithtofu.com/2017/03/16/squid-on-mac-osx/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</div>
+</body>
+</html>
