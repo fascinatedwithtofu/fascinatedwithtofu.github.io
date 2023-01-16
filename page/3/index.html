@@ -40,6 +40,8 @@
     
 
     
+    <meta property="algolia:search" data-application-id="KK25X6P8I7" data-api-key="e6044befe27e1363a2cb80d656e12686" data-index-name="blog-posts">
+    
 
     
 
@@ -67,7 +69,7 @@
             
         }
         window.aomori_logo_typed_animated = false
-        window.aomori_search_algolia = false
+        window.aomori_search_algolia = true
 
     </script>
 
@@ -673,8 +675,18 @@ class="article article-type-post"
             </section>
 
             
-            <aside class="sidebar ">
+            <aside class="sidebar sidebar-search-fix">
                 
+
+    <div class="search">
+    <div class="has-icon-right">
+        <input type="text" class="form-input" id="search" placeholder="SEARCH" autocomplete="off">
+        <div class="form-icon">
+            <box-icon name='search' color="#3c4859"></box-icon>
+        </div>
+    </div>
+    <div class="search-result" id="search-ps"></div>
+</div>
 
 
 <div class="widget" id="widget">

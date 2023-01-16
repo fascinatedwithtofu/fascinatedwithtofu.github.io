@@ -64,6 +64,8 @@
     
 
     
+    <meta property="algolia:search" data-application-id="KK25X6P8I7" data-api-key="e6044befe27e1363a2cb80d656e12686" data-index-name="blog-posts">
+    
 
     
 
@@ -91,7 +93,7 @@
             
         }
         window.aomori_logo_typed_animated = false
-        window.aomori_search_algolia = false
+        window.aomori_search_algolia = true
 
     </script>
 
@@ -164,7 +166,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcyqh64a000jx41k2g788deb" class="article article-type-post" itemscope
+    <article id="post-clcyr40yn000kun1k75tff6m2" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -310,6 +312,21 @@
 
 
 
+<section class="comments comments-disqus">
+    <div id="disqus_thread"></div>
+    <script>
+        ;(function () {
+            // DON'T EDIT BELOW THIS LINE
+            var d = document,
+                s = d.createElement('script')
+            s.src =
+                'https://tofu.disqus.com/embed.js'
+            s.setAttribute('data-timestamp', +new Date())
+            ;(d.head || d.body).appendChild(s)
+        })()
+    </script>
+</section>
+
 
 
 
@@ -327,8 +344,18 @@
             </section>
 
             
-            <aside class="sidebar ">
+            <aside class="sidebar sidebar-search-fix">
                 
+
+    <div class="search">
+    <div class="has-icon-right">
+        <input type="text" class="form-input" id="search" placeholder="SEARCH" autocomplete="off">
+        <div class="form-icon">
+            <box-icon name='search' color="#3c4859"></box-icon>
+        </div>
+    </div>
+    <div class="search-result" id="search-ps"></div>
+</div>
 
 
 <div class="widget" id="widget">
