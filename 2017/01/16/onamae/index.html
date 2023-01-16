@@ -138,7 +138,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcyp67lg0026ir1k1qdb9tvq" class="article article-type-post" itemscope
+    <article id="post-clcyp7uwq002ali1k3dgpc751" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -217,7 +217,7 @@
 <p><a href="//af.moshimo.com/af/c/click?a_id=690059&p_id=109&pc_id=109&pl_id=2745&guid=ON" target="_blank">■ドメイン取るならお名前.com■</a><img src="//i.moshimo.com/af/i/impression?a_id=690059&p_id=109&pc_id=109&pl_id=2745" width="1" height="1" style="border:none;"></p>
 <h3><span id="dozens-の設定">Dozens の設定</span></h3><p>お名前ドットコムの独自ドメインへアクセスすると、裏側で「実は github.io のページなんですよ」という風にそれぞれを裏で繋げてくれる仕組みが必要です。<br>そんなインターネットの裏方作業をしてくれる名前解決を無料で実施してくれるサービスがDozensです。<a target="_blank" rel="noopener" href="https://dozens.jp">dozens</a><br>まずはカウントを取得してログインすると、「Add a new domain」と赤字がありますので、追加していきます。<br><img src="https://cldup.com/T48gJgihU7.png" alt="step1"><br>次に同じく赤字の「Record」に進みます。<br><img src="https://cldup.com/fmfS7qCtQW.png" alt="step2"><br>今回の場合は、サブドメイン <code>www</code> として、CNAMEを選択します。下の空欄は <code>username.github.io</code> を入力します。<br><img src="https://cldup.com/kCFZBt8TJP.png" alt="step3"></p>
 <h3><span id="github-page-側設定変更">Github Page 側設定変更</span></h3><p><code>vi source/CNAME</code></p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username.github.<span class="built_in">io</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">username.github.<span class="built_in">io</span></span><br></pre></td></tr></table></figure>
 
 <p><code>http://</code> や <code>https://</code> などは付けてはいけません。</p>
 <h3><span id="お名前ドットコム側dns設定">お名前ドットコム側DNS設定</span></h3><p>お名前ドットコムの管理画面にログインし、ネームサーバの設定をDozensの指定したものに変更します。</p>

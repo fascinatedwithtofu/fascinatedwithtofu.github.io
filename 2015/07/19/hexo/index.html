@@ -138,7 +138,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcyp67l7001lir1kc3qu1eig" class="article article-type-post" itemscope
+    <article id="post-clcyp7uwf001oli1kf90r2t2t" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -189,16 +189,16 @@
 
 
 <h3><span id="参考サイト">参考サイト</span></h3><p><a target="_blank" rel="noopener" href="http://qiita.com/oreo3@github/items/622fd6a09d5c1593fee4">Macにnodebrew（node.js, npm）をインストールする手順</a><br><a target="_blank" rel="noopener" href="http://qiita.com/shizuma/items/8616bbe3ebe8ab0b6ca1">Qiita Markdown 書き方 まとめ</a><br><a target="_blank" rel="noopener" href="http://liginc.co.jp/web/programming/server/104594">所要時間3分!? Github PagesとHEXOで爆速ブログ構築してみよう！</a></p>
-<h3><span id="手順">手順</span></h3><h4><span id="nvm-のインストール">nvm のインストール</span></h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone git:<span class="regexp">//gi</span>thub.com<span class="regexp">/creationix/</span>nvm.git ~/.nvm</span><br><span class="line">source ~<span class="regexp">/.nvm/</span>nvm.sh </span><br></pre></td></tr></table></figure>
+<h3><span id="手順">手順</span></h3><h4><span id="nvm-のインストール">nvm のインストール</span></h4><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">git clone git:<span class="regexp">//gi</span>thub.com<span class="regexp">/creationix/</span>nvm.git ~/.nvm</span><br><span class="line">source ~<span class="regexp">/.nvm/</span>nvm.sh </span><br></pre></td></tr></table></figure>
 
-<h4><span id="nvm-をターミナル起動時に有効にする">nvm をターミナル起動時に有効にする</span></h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">node</span> -v</span><br><span class="line"><span class="attribute">v0</span>.<span class="number">12</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">nvm</span> alias default v0.<span class="number">12</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">default</span> -&gt; v0.<span class="number">12</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">vi</span> ~/.zprofile</span><br></pre></td></tr></table></figure>
+<h4><span id="nvm-をターミナル起動時に有効にする">nvm をターミナル起動時に有効にする</span></h4><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">node</span> -v</span><br><span class="line"><span class="attribute">v0</span>.<span class="number">12</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">nvm</span> alias default v0.<span class="number">12</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">default</span> -&gt; v0.<span class="number">12</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">vi</span> ~/.zprofile</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>if [[ -s ~/.nvm/nvm.sh ]];<br>then source ~/.nvm/nvm.sh<br>fi</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zprofile</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zprofile</span><br></pre></td></tr></table></figure>
 
-<h4><span id="hexo-をインストール">Hexo をインストール</span></h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g hexo</span><br></pre></td></tr></table></figure>
+<h4><span id="hexo-をインストール">Hexo をインストール</span></h4><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g hexo</span><br></pre></td></tr></table></figure>
 
 <h4><span id="公開用の設定等は過去に実施していたようなので割愛">公開用の設定等は過去に実施していたようなので割愛</span></h4><p>liginc さんの元ネタの <code>_config.yml</code> の <code>type</code> は <code>github</code> でなく  <code>git</code> でうまくいった</p>
 <p>＊＊＊2017/08/01追記＊＊＊<br>repository 指定先も変更<br><a href="http://www.fascinatedwithtofu.com/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a></p>
