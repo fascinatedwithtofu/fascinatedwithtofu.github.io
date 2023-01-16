@@ -235,7 +235,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcyxqiyv000cjw1kfom7gpy2" class="article article-type-post" itemscope
+    <article id="post-clcyyygin000bp01k9ric6gip" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -304,7 +304,7 @@
 <h4><span id="ステップ3-はてぶの設定変更">ステップ3 はてぶの設定変更</span></h4><p>はてぶの管理画面のタブから、<br><code>デザイン＞カスタマイズ＞フッタ</code><br>へと進みます。<br><img src="https://cldup.com/JSD56GjwOA.png" alt></p>
 <p>私の場合、一行目に Amazon Publisher Studio のスクリプトが書かれていますので、この下の行に、さきほどクリップボードへコピーしたスクリプトを貼り付けます。</p>
 <p>こんな形になると思います。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Start of Amazon Publisher Studio Loader --&gt;</span> ... （中略）...  <span class="tag">&lt;<span class="name">script</span>&gt;</span>  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>    <span class="comment">&lt;!-- Amazon のスクリプト --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&#x27;text/javascript&#x27;</span>&gt;</span><span class="language-javascript"><span class="keyword">var</span> _merchantSettings=_merchantSettings || ... （中略）... </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>　  <span class="comment">&lt;!-- 今回追加する Apple のスクリプト --&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Start of Amazon Publisher Studio Loader --&gt;</span> ... （中略）...  <span class="tag">&lt;<span class="name">script</span>&gt;</span>  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>    <span class="comment">&lt;!-- Amazon のスクリプト --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&#x27;text/javascript&#x27;</span>&gt;</span><span class="language-javascript"><span class="keyword">var</span> _merchantSettings=_merchantSettings || ... （中略）... </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>　  <span class="comment">&lt;!-- 今回追加する Apple のスクリプト --&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>最後に、変更を保存して完了です。</p>
 <h3><span id="確認">確認</span></h3><p>ブラウザから右クリックでコピーします。<br>大好きな Podcast のひとつ、<a target="_blank" rel="noopener" href="https://itunes.apple.com/jp/podcast/piano-jazz-shorts/id121493685?mt=2#">Piano Jazz Shorts by NPR</a>です。<br><img src="https://cldup.com/xCS-r855oH.png" alt></p>
@@ -348,7 +348,7 @@
 <nav class="article-nav">
   
     <a href="/2017/02/17/car-can-security/" id="article-nav-newer" class="article-nav-link-wrap">
-      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-caption">Newer</div>
       <div class="article-nav-title">
         
           【初学者向け】自動車/車載ネットワーク関連サイバーセキュリティ まとめ（随時更新）
@@ -358,7 +358,7 @@
   
   
     <a href="/2017/02/16/sauna-sento-books/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-caption">Older</div>
       <div class="article-nav-title">【書評】サウナ・銭湯入門書籍 2016年</div>
     </a>
   
@@ -366,7 +366,7 @@
 
 
     <section class="share">
-        <div class="share-title">分享</div>
+        <div class="share-title">share</div>
         <a class="share-item" target="_blank"
             href="https://twitter.com/share?text=Apple の Auto Link Maker をはてぶに追加してみる(試行錯誤中) - fascinated with tofu&url=http%3A%2F%2Fwww.fascinatedwithtofu.com%2F2017%2F02%2F17%2Fapple-autolinkmaker-hatebu%2F">
             <ion-icon name="logo-twitter"></ion-icon>
@@ -445,8 +445,15 @@
             <aside class="sidebar sidebar-search-fix">
                 
 
-    {% musicxml https://gist.githubusercontent.com/withtofu/100363905b5bd308f9ddaa8135d98cc8/raw/925e4e5067356c5145f333f184becc9bcf1f6103/windows.musicxml  "false" %}
-
+    <div class="search">
+    <div class="has-icon-right">
+        <input type="text" class="form-input" id="search" placeholder="SEARCH" autocomplete="off">
+        <div class="form-icon">
+            <box-icon name='search' color="#3c4859"></box-icon>
+        </div>
+    </div>
+    <div class="search-result" id="search-ps"></div>
+</div>
 
 
 <div class="widget" id="widget">
@@ -473,7 +480,7 @@
   <div class="widget-wrap widget-tags">
     <div class="widget-title"><span>Tags</span></div>
     <div class="widget-inner">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/" rel="tag">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/" rel="tag">IT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain/" rel="tag">domain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/money/" rel="tag">money</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/speedtest-cli/" rel="tag">speedtest-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/" rel="tag">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain/" rel="tag">domain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/money/" rel="tag">money</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/musicxml/" rel="tag">musicxml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/speedtest-cli/" rel="tag">speedtest-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a></li></ul>
     </div>
   </div>
 
@@ -486,6 +493,14 @@
       <ul>
         
           <li>
+            <a href="/2023/01/17/music-sheet-share-2/">musicxml による楽譜の貼り付けテスト その2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/16/music-sheet-share/">musicxml による楽譜の貼り付けテスト その1</a>
+          </li>
+        
+          <li>
             <a href="/2023/01/14/ubuntu-desktop-gaming/">ThinkCentre に Ubuntu Desktop を入れてゲームをする</a>
           </li>
         
@@ -495,14 +510,6 @@
         
           <li>
             <a href="/2019/08/09/speedtest-cli-splunk/">家のインターネットの回線速度を speedtest-cli で観測する</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
           </li>
         
       </ul>

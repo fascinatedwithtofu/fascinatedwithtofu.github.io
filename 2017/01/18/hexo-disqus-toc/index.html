@@ -170,7 +170,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcyxqizh001ejw1k70xhct7m" class="article article-type-post" itemscope
+    <article id="post-clcyyygj6001ap01k0x61au2q" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -207,7 +207,7 @@
 
             
             <div class="article-tag">
-                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/" rel="tag">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
             </div>
             
 
@@ -225,21 +225,21 @@
 <p>サイト名と後から必要になる<code>shortname</code> の作成。<br><img src="https://cldup.com/_XL596S6Io.png" alt=" "></p>
 <p>先達めのやりかたと少し変更されているのか、 What platform is your site? と聞かれるので、<br><img src="https://cldup.com/xBS-Ps6m5j.png" alt> <code>I don&#39;t see my platform listed, install manually with Universal Code</code> を選択して、Finishしました。</p>
 <h4><span id="hexo-側設定">Hexo 側設定</span></h4><p>コマンド二行です。</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">hexo config disqus_shortname &#123;YOUR_SHORTNAME&#125;</span><br><span class="line">hexo --config themes/light/_config.yml config comment_provider disqus</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo config disqus_shortname &#123;YOUR_SHORTNAME&#125;</span><br><span class="line">hexo --config themes/light/_config.yml config comment_provider disqus</span><br></pre></td></tr></table></figure>
 
 
 <p><del>このコマンドによって、記事のフッタ部分の ejs テンプレートに以下のようなセクションが追加されていました。</del><br>＝＞訂正です。もともとのテンプレートに既に記述ありでした。</p>
-<figure class="highlight mojolicious"><table><tr><td class="code"><pre><span class="line"><span class="language-xml">&lt;%</span><span class="language-perl"> <span class="keyword">if</span> (!<span class="keyword">index</span> &amp;&amp; post.comments &amp;&amp; config.disqus_shortname)&#123; </span><span class="language-xml">%&gt;</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;comments&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;disqus_thread&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//disqus.com/?ref_noscript&quot;</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">&lt;%</span><span class="language-perl"> &#125; </span><span class="language-xml">%&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight mojolicious"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">&lt;%</span><span class="language-perl"> <span class="keyword">if</span> (!<span class="keyword">index</span> &amp;&amp; post.comments &amp;&amp; config.disqus_shortname)&#123; </span><span class="language-xml">%&gt;</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;comments&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;disqus_thread&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//disqus.com/?ref_noscript&quot;</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">&lt;%</span><span class="language-perl"> &#125; </span><span class="language-xml">%&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4><span id="つまずいたところ">つまずいたところ</span></h4><p>その後 <code>hexo s</code> で確認してもうまく反映されなかったのですが、<code>hexo d -g</code> してパブリッシュしてみると、反映されていました。</p>
 <h4><span id="参考">参考</span></h4><p><a target="_blank" rel="noopener" href="https://yoshinorin.net/2016/11/04/setup-disqus-to-blog/">Disqusを使ってブログ（Hexo）にコメント欄を設置しました &amp; ブログにコメント欄を設置した理由</a><br><a target="_blank" rel="noopener" href="http://wassan128.github.io/blog/2015/09/11/">Hexoでの記事の追加とコメント機能について</a></p>
 <h3><span id="自動生成される目次toc-table-of-contentsの導入">自動生成される目次（ToC: Table of Contents）の導入</span></h3><p>いいなぁと思っていたので、目次も導入しました。<br>きっかけは、<a target="_blank" rel="noopener" href="https://tea3.github.io/p/usecase-of-hexo-plugin/">Hexoブログで使っているプラグインを晒してみる</a> でした。<br>その後 <code>hexo-toc</code> を導入してみましたが、うまくいかず、別の手段を探していた時にちょうど同様の事象にあたっている方を発見しました。<br><a target="_blank" rel="noopener" href="https://gazee.net/hexo/hexo-add-toc/">Hexoに目次を自動的に追加する方法</a></p>
 <h4><span id="テンプレートの編集">テンプレートの編集</span></h4><p>以下を記事のテンプレートに追加します。場所は <code>&lt;%- post.content %&gt;</code> の上です。</p>
 <p><code>vi themes/lhogehoge/layout/_partial/article.ejs</code></p>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">&lt;<span class="meta">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span>&#123; <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;toc&quot;</span> class=<span class="string">&quot;toc-article&quot;</span>&gt;</span><br><span class="line">    &lt;p class=<span class="string">&quot;toc-title&quot;</span>&gt;目次&lt;/p&gt;</span><br><span class="line">    &lt;<span class="meta">%</span>- toc<span class="comment">(post.content)</span> <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;<span class="meta">%</span> &#125; <span class="meta">%</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span>&#123; <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;toc&quot;</span> class=<span class="string">&quot;toc-article&quot;</span>&gt;</span><br><span class="line">    &lt;p class=<span class="string">&quot;toc-title&quot;</span>&gt;目次&lt;/p&gt;</span><br><span class="line">    &lt;<span class="meta">%</span>- toc<span class="comment">(post.content)</span> <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;<span class="meta">%</span> &#125; <span class="meta">%</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <p>ただし、私の場合は、list が重複してしまったので、以下のように微調整を施しました。</p>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">&lt;<span class="meta">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span>&#123; <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;toc&quot;</span> class=<span class="string">&quot;toc-article&quot;</span>&gt;</span><br><span class="line">    &lt;p class=<span class="string">&quot;toc-title&quot;</span>&gt;目次&lt;/p&gt;</span><br><span class="line">&lt;<span class="meta">%</span>- toc<span class="comment">(post.content, &#123;list_number: false&#125;)</span> <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;<span class="meta">%</span> &#125; <span class="meta">%</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span>&#123; <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;toc&quot;</span> class=<span class="string">&quot;toc-article&quot;</span>&gt;</span><br><span class="line">    &lt;p class=<span class="string">&quot;toc-title&quot;</span>&gt;目次&lt;/p&gt;</span><br><span class="line">&lt;<span class="meta">%</span>- toc<span class="comment">(post.content, &#123;list_number: false&#125;)</span> <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;<span class="meta">%</span> &#125; <span class="meta">%</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <h4><span id="参考">参考</span></h4><p><a target="_blank" rel="noopener" href="http://morningchen.com/2015/07/15/Table-Of-Contents-for-hexo/">在Hexo中给文章加目录(Table Of Contents</a><br><a target="_blank" rel="noopener" href="https://tea3.github.io/p/usecase-of-hexo-plugin/">Hexoブログで使っているプラグインを晒してみる</a><br><a target="_blank" rel="noopener" href="https://gazee.net/hexo/hexo-add-toc/">Hexoに目次を自動的に追加する方法</a></p>
 
@@ -261,7 +261,7 @@
 <nav class="article-nav">
   
     <a href="/2017/01/26/elk-docker-deploy1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-caption">Newer</div>
       <div class="article-nav-title">
         
           Docker for Mac 環境で簡単に ELK Stack をビルドする1
@@ -271,7 +271,7 @@
   
   
     <a href="/2017/01/16/onamae/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-caption">Older</div>
       <div class="article-nav-title">Github Pages をお名前.com で取得した独自ドメインに変更しました</div>
     </a>
   
@@ -279,7 +279,7 @@
 
 
     <section class="share">
-        <div class="share-title">分享</div>
+        <div class="share-title">share</div>
         <a class="share-item" target="_blank"
             href="https://twitter.com/share?text=Hexo にコメント機能と自動生成目次(toc)を追加しました - fascinated with tofu&url=http%3A%2F%2Fwww.fascinatedwithtofu.com%2F2017%2F01%2F18%2Fhexo-disqus-toc%2F">
             <ion-icon name="logo-twitter"></ion-icon>
@@ -358,8 +358,15 @@
             <aside class="sidebar sidebar-search-fix">
                 
 
-    {% musicxml https://gist.githubusercontent.com/withtofu/100363905b5bd308f9ddaa8135d98cc8/raw/925e4e5067356c5145f333f184becc9bcf1f6103/windows.musicxml  "false" %}
-
+    <div class="search">
+    <div class="has-icon-right">
+        <input type="text" class="form-input" id="search" placeholder="SEARCH" autocomplete="off">
+        <div class="form-icon">
+            <box-icon name='search' color="#3c4859"></box-icon>
+        </div>
+    </div>
+    <div class="search-result" id="search-ps"></div>
+</div>
 
 
 <div class="widget" id="widget">
@@ -386,7 +393,7 @@
   <div class="widget-wrap widget-tags">
     <div class="widget-title"><span>Tags</span></div>
     <div class="widget-inner">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/" rel="tag">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/" rel="tag">IT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain/" rel="tag">domain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/money/" rel="tag">money</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/speedtest-cli/" rel="tag">speedtest-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/" rel="tag">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain/" rel="tag">domain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/money/" rel="tag">money</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/musicxml/" rel="tag">musicxml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/speedtest-cli/" rel="tag">speedtest-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a></li></ul>
     </div>
   </div>
 
@@ -399,6 +406,14 @@
       <ul>
         
           <li>
+            <a href="/2023/01/17/music-sheet-share-2/">musicxml による楽譜の貼り付けテスト その2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/16/music-sheet-share/">musicxml による楽譜の貼り付けテスト その1</a>
+          </li>
+        
+          <li>
             <a href="/2023/01/14/ubuntu-desktop-gaming/">ThinkCentre に Ubuntu Desktop を入れてゲームをする</a>
           </li>
         
@@ -408,14 +423,6 @@
         
           <li>
             <a href="/2019/08/09/speedtest-cli-splunk/">家のインターネットの回線速度を speedtest-cli で観測する</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
           </li>
         
       </ul>

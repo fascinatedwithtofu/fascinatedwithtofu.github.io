@@ -175,7 +175,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcyxqiyt000bjw1k1szo8g58" class="article article-type-post" itemscope
+    <article id="post-clcyyygil0007p01k8w5z40f4" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -232,16 +232,16 @@
 <p>その後対話に従うだけです。</p>
 <p>注意点は<a target="_blank" rel="noopener" href="http://blog.stormcat.io/entry/alpine-entry-setup">こちら</a>にある通り、<br>Which disk(s) would you like to use? (or ‘?’ for help or ‘none’) [none] : <code>sda</code><br>Hou would you like to use it? (‘sys’, ‘data, ‘lvm’ or ‘?’ for help) [?] : <code>sys</code><br>の2点です。</p>
 <h3><span id="ssh-の設定">ssh の設定</span></h3><p>本来よろしくないかもしれませんが root ユーザでそのまま ssh させます。<code>/etc/ssh/sshd_config</code>の設定から<br><code>PermitRootLogin yes</code><br>と変更。</p>
-<h3><span id="つまずいた場所-docker-がインストールできない">つまずいた場所 - Docker がインストールできない</span></h3><figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line">root@alpine ~# apk add docker</span><br><span class="line"><span class="keyword">ERROR: </span>unsatisfiable constraints:</span><br><span class="line">  docker (missing):</span><br><span class="line">    required by: world[docker]</span><br></pre></td></tr></table></figure>
+<h3><span id="つまずいた場所-docker-がインストールできない">つまずいた場所 - Docker がインストールできない</span></h3><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@alpine ~# apk add docker</span><br><span class="line"><span class="keyword">ERROR: </span>unsatisfiable constraints:</span><br><span class="line">  docker (missing):</span><br><span class="line">    required by: world[docker]</span><br></pre></td></tr></table></figure>
 
 <p>####解決方法<br><a target="_blank" rel="noopener" href="https://forums.docker.com/t/docker-apk-package-for-alpine-linux-has-an-unresolved-dependency-to-libseccomp/9604/4">こちら</a>のフォーラムに書かれているように、<a target="_blank" rel="noopener" href="http://nl.alpinelinux.org/alpine/edge/community/x86_64/">edge community レポジトリ</a>を指定しないといけないようです。<br>知っていれば簡単ですね。</p>
 <p><code>apk add --no-cache  --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository  http://dl-cdn.alpinelinux.org/alpine/edge/community  docker</code></p>
 <h3><span id="docker-の-proxy-越えの設定">docker の proxy 越えの設定</span></h3><p><code>/etc/init.d/docker</code> を編集して以下2つの export 文を追記。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/sbin/openrc-run</span></span><br><span class="line"><span class="comment"># Copyright 1999-2013 Gentoo Foundation</span></span><br><span class="line"><span class="comment"># Distributed under the terms of the GNU General Public License v2</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">http_proxy</span>=<span class="string">&quot;&lt;ipaddr&gt;:&lt;port&gt;/&quot;</span></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">https_proxy</span>=<span class="string">&quot;&lt;ipaddr&gt;:&lt;port&gt;/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">command</span>=<span class="string">&quot;<span class="variable">$&#123;DOCKERD_BINARY:-/usr/bin/dockerd&#125;</span>&quot;</span></span><br><span class="line"><span class="attribute">pidfile</span>=<span class="string">&quot;<span class="variable">$&#123;DOCKER_PIDFILE:-/run/$&#123;RC_SVCNAME&#125;</span>.pid&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">(以下略)</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/sbin/openrc-run</span></span><br><span class="line"><span class="comment"># Copyright 1999-2013 Gentoo Foundation</span></span><br><span class="line"><span class="comment"># Distributed under the terms of the GNU General Public License v2</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">http_proxy</span>=<span class="string">&quot;&lt;ipaddr&gt;:&lt;port&gt;/&quot;</span></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">https_proxy</span>=<span class="string">&quot;&lt;ipaddr&gt;:&lt;port&gt;/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">command</span>=<span class="string">&quot;<span class="variable">$&#123;DOCKERD_BINARY:-/usr/bin/dockerd&#125;</span>&quot;</span></span><br><span class="line"><span class="attribute">pidfile</span>=<span class="string">&quot;<span class="variable">$&#123;DOCKER_PIDFILE:-/run/$&#123;RC_SVCNAME&#125;</span>.pid&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">(以下略)</span><br></pre></td></tr></table></figure>
 
 
 <p>###確認</p>
-<figure class="highlight sqf"><table><tr><td class="code"><pre><span class="line">root@alpine ~<span class="meta"># service docker start</span></span><br><span class="line">* Caching service dependencies ...                                                                                                                                             [ ok ]</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: creating file</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: correcting mode</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: correcting <span class="built_in">owner</span></span><br><span class="line">ulimit: unrecognized option: u</span><br><span class="line">* Starting docker ...   </span><br><span class="line"></span><br><span class="line">root@alpine ~<span class="meta"># docker run --name ng  -p 80:80 nginx</span></span><br><span class="line">Unable <span class="keyword">to</span> <span class="built_in">find</span> <span class="built_in">image</span> <span class="string">&#x27;nginx:latest&#x27;</span> locally</span><br><span class="line">latest: Pulling <span class="keyword">from</span> library/nginx</span><br><span class="line"><span class="number">5040</span>bd298390: Already exists</span><br><span class="line"><span class="number">333547110842</span>: Pull complete</span><br><span class="line"><span class="number">4</span>df1e44d2a7a: Pull complete</span><br><span class="line">Digest: sha256:f2d384a6ca8ada733df555be3edc427f2e5f285ebf468aae940843de8cf74645</span><br><span class="line">Status: Downloaded newer <span class="built_in">image</span> <span class="keyword">for</span> nginx:latest</span><br><span class="line">hogehoge - - [<span class="number">08</span>/Feb/<span class="number">2017</span>:<span class="number">05</span>:<span class="number">45</span>:<span class="number">13</span> +<span class="number">0000</span>] <span class="string">&quot;GET / HTTP/1.1&quot;</span> <span class="number">200</span> <span class="number">612</span> <span class="string">&quot;-&quot;</span> <span class="string">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&quot;</span> <span class="string">&quot;-&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@alpine ~<span class="meta"># service docker start</span></span><br><span class="line">* Caching service dependencies ...                                                                                                                                             [ ok ]</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: creating file</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: correcting mode</span><br><span class="line">* /var/<span class="built_in">log</span>/docker.<span class="built_in">log</span>: correcting <span class="built_in">owner</span></span><br><span class="line">ulimit: unrecognized option: u</span><br><span class="line">* Starting docker ...   </span><br><span class="line"></span><br><span class="line">root@alpine ~<span class="meta"># docker run --name ng  -p 80:80 nginx</span></span><br><span class="line">Unable <span class="keyword">to</span> <span class="built_in">find</span> <span class="built_in">image</span> <span class="string">&#x27;nginx:latest&#x27;</span> locally</span><br><span class="line">latest: Pulling <span class="keyword">from</span> library/nginx</span><br><span class="line"><span class="number">5040</span>bd298390: Already exists</span><br><span class="line"><span class="number">333547110842</span>: Pull complete</span><br><span class="line"><span class="number">4</span>df1e44d2a7a: Pull complete</span><br><span class="line">Digest: sha256:f2d384a6ca8ada733df555be3edc427f2e5f285ebf468aae940843de8cf74645</span><br><span class="line">Status: Downloaded newer <span class="built_in">image</span> <span class="keyword">for</span> nginx:latest</span><br><span class="line">hogehoge - - [<span class="number">08</span>/Feb/<span class="number">2017</span>:<span class="number">05</span>:<span class="number">45</span>:<span class="number">13</span> +<span class="number">0000</span>] <span class="string">&quot;GET / HTTP/1.1&quot;</span> <span class="number">200</span> <span class="number">612</span> <span class="string">&quot;-&quot;</span> <span class="string">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&quot;</span> <span class="string">&quot;-&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>iptables はデフォルトで stop していたので、そとから <code>http://&lt;alpine&#39;s ipaddr&gt;/</code> をつつくことができます。<br><img src="https://cldup.com/vAMhjoumJz.jpg" alt></p>
 
@@ -263,7 +263,7 @@
 <nav class="article-nav">
   
     <a href="/2017/02/15/home-netflow-monitoring/" id="article-nav-newer" class="article-nav-link-wrap">
-      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-caption">Newer</div>
       <div class="article-nav-title">
         
           無料でできる自宅ネットワーク監視環境の構築
@@ -273,7 +273,7 @@
   
   
     <a href="/2017/02/04/docker-photon-lightweight/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-caption">Older</div>
       <div class="article-nav-title">Docker を動かすための軽量 Linux、 Photon を試してみました</div>
     </a>
   
@@ -281,7 +281,7 @@
 
 
     <section class="share">
-        <div class="share-title">分享</div>
+        <div class="share-title">share</div>
         <a class="share-item" target="_blank"
             href="https://twitter.com/share?text=軽量コンテナ用 OS  alpline に dockerを入れるまで - fascinated with tofu&url=http%3A%2F%2Fwww.fascinatedwithtofu.com%2F2017%2F02%2F08%2Falpine-docker-deploy%2F">
             <ion-icon name="logo-twitter"></ion-icon>
@@ -360,8 +360,15 @@
             <aside class="sidebar sidebar-search-fix">
                 
 
-    {% musicxml https://gist.githubusercontent.com/withtofu/100363905b5bd308f9ddaa8135d98cc8/raw/925e4e5067356c5145f333f184becc9bcf1f6103/windows.musicxml  "false" %}
-
+    <div class="search">
+    <div class="has-icon-right">
+        <input type="text" class="form-input" id="search" placeholder="SEARCH" autocomplete="off">
+        <div class="form-icon">
+            <box-icon name='search' color="#3c4859"></box-icon>
+        </div>
+    </div>
+    <div class="search-result" id="search-ps"></div>
+</div>
 
 
 <div class="widget" id="widget">
@@ -388,7 +395,7 @@
   <div class="widget-wrap widget-tags">
     <div class="widget-title"><span>Tags</span></div>
     <div class="widget-inner">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/" rel="tag">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT/" rel="tag">IT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain/" rel="tag">domain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/money/" rel="tag">money</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/speedtest-cli/" rel="tag">speedtest-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Game/" rel="tag">Game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alpine/" rel="tag">alpine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/amazon-associate/" rel="tag">amazon associate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/" rel="tag">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple-affiliate/" rel="tag">apple affiliate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chef/" rel="tag">chef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain/" rel="tag">domain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elastic/" rel="tag">elastic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elk/" rel="tag">elk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/essay/" rel="tag">essay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gas/" rel="tag">gas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/google-adsense/" rel="tag">google adsense</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/live/" rel="tag">live</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/money/" rel="tag">money</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/movie/" rel="tag">movie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/musicxml/" rel="tag">musicxml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netflow/" rel="tag">netflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photon/" rel="tag">photon</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sauna/" rel="tag">sauna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scraping/" rel="tag">scraping</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slack/" rel="tag">slack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/speedtest-cli/" rel="tag">speedtest-cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/squid/" rel="tag">squid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vagrant/" rel="tag">vagrant</a></li></ul>
     </div>
   </div>
 
@@ -401,6 +408,14 @@
       <ul>
         
           <li>
+            <a href="/2023/01/17/music-sheet-share-2/">musicxml による楽譜の貼り付けテスト その2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/16/music-sheet-share/">musicxml による楽譜の貼り付けテスト その1</a>
+          </li>
+        
+          <li>
             <a href="/2023/01/14/ubuntu-desktop-gaming/">ThinkCentre に Ubuntu Desktop を入れてゲームをする</a>
           </li>
         
@@ -410,14 +425,6 @@
         
           <li>
             <a href="/2019/08/09/speedtest-cli-splunk/">家のインターネットの回線速度を speedtest-cli で観測する</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/01/hexo-permission-denied/">Hexo でひさびさに deploy したらパーミッションエラー</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/01/fujirock2017-matome/">【雑記】FUJI ROCK FESTIVAL 17 来年快適に過ごすためのカイゼン点まとめ</a>
           </li>
         
       </ul>
