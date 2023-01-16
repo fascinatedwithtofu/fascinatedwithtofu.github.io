@@ -108,6 +108,10 @@
                 
                 <a href="/archives">Archives</a>
                 
+                <a href="/categories/IT">IT</a>
+                
+                <a href="/categories/Music">Music</a>
+                
             </div>
             <div class="header-menu-social">
                 
@@ -134,6 +138,10 @@
                     
                     <a href="/archives">Archives</a>
                     
+                    <a href="/categories/IT">IT</a>
+                    
+                    <a href="/categories/Music">Music</a>
+                    
                 </div>
             </div>
         </div>
@@ -146,7 +154,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clcypo4w1001a6t1k6y868snm" class="article article-type-post" itemscope
+    <article id="post-clcyqh64n001ax41kdpa662cu" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -201,32 +209,24 @@
 <p>サイト名と後から必要になる<code>shortname</code> の作成。<br><img src="https://cldup.com/_XL596S6Io.png" alt=" "></p>
 <p>先達めのやりかたと少し変更されているのか、 What platform is your site? と聞かれるので、<br><img src="https://cldup.com/xBS-Ps6m5j.png" alt> <code>I don&#39;t see my platform listed, install manually with Universal Code</code> を選択して、Finishしました。</p>
 <h4><span id="hexo-側設定">Hexo 側設定</span></h4><p>コマンド二行です。</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">hexo config disqus_shortname &#123;YOUR_SHORTNAME&#125;</span><br><span class="line">hexo --config themes/light/_config.yml config comment_provider disqus```</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">~~このコマンドによって、記事のフッタ部分の ejs テンプレートに以下のようなセクションが追加されていました。~~</span><br><span class="line">＝＞訂正です。もともとのテンプレートに既に記述ありでした。</span><br></pre></td></tr></table></figure>
-<p>&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.disqus_shortname){ %&gt;</p>
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-<% } %>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#### つまずいたところ</span></span><br><span class="line">その後 `hexo s` で確認してもうまく反映されなかったのですが、`hexo d -g` してパブリッシュしてみると、反映されていました。</span><br><span class="line"></span><br><span class="line"><span class="comment">#### 参考</span></span><br><span class="line">[Disqusを使ってブログ（Hexo）にコメント欄を設置しました &amp; ブログにコメント欄を設置した理由](https:<span class="regexp">//y</span>oshinorin.net<span class="regexp">/2016/</span><span class="number">11</span><span class="regexp">/04/</span>setup-disqus-to-blog/)</span><br><span class="line">[Hexoでの記事の追加とコメント機能について](http:<span class="regexp">//</span>wassan128.github.io<span class="regexp">/blog/</span><span class="number">2015</span><span class="regexp">/09/</span><span class="number">11</span>/)</span><br><span class="line"></span><br><span class="line"><span class="comment">### 自動生成される目次（ToC: Table of Contents）の導入</span></span><br><span class="line">いいなぁと思っていたので、目次も導入しました。</span><br><span class="line">きっかけは、[Hexoブログで使っているプラグインを晒してみる](https:<span class="regexp">//</span>tea3.github.io<span class="regexp">/p/u</span>secase-of-hexo-plugin/) でした。</span><br><span class="line">その後 `hexo-toc` を導入してみましたが、うまくいかず、別の手段を探していた時にちょうど同様の事象にあたっている方を発見しました。</span><br><span class="line">[Hexoに目次を自動的に追加する方法](https:<span class="regexp">//g</span>azee.net<span class="regexp">/hexo/</span>hexo-add-toc/)</span><br><span class="line"></span><br><span class="line"><span class="comment">#### テンプレートの編集</span></span><br><span class="line">以下を記事のテンプレートに追加します。場所は `&lt;%- post.content %&gt;` の上です。</span><br><span class="line"></span><br><span class="line">`vi themes<span class="regexp">/lhogehoge/</span>layout<span class="regexp">/_partial/</span>article.ejs`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<% if (!index){ %>
-  <div id="toc" class="toc-article">
-    <p class="toc-title">目次</p>
-    <%- toc(post.content) %>
-  </%-></div>
-<% } %>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">ただし、私の場合は、<span class="type">list</span> が重複してしまったので、以下のように微調整を施しました。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<% if (!index){ %>
-  <div id="toc" class="toc-article">
-    <p class="toc-title">目次</p>
-<%- toc(post.content, {list_number: false}) %>
-  </%-></div>
-<% } %>
-```
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">hexo config disqus_shortname &#123;YOUR_SHORTNAME&#125;</span><br><span class="line">hexo --config themes/light/_config.yml config comment_provider disqus</span><br></pre></td></tr></table></figure>
+
+
+<p><del>このコマンドによって、記事のフッタ部分の ejs テンプレートに以下のようなセクションが追加されていました。</del><br>＝＞訂正です。もともとのテンプレートに既に記述ありでした。</p>
+<figure class="highlight mojolicious"><table><tr><td class="code"><pre><span class="line"><span class="language-xml">&lt;%</span><span class="language-perl"> <span class="keyword">if</span> (!<span class="keyword">index</span> &amp;&amp; post.comments &amp;&amp; config.disqus_shortname)&#123; </span><span class="language-xml">%&gt;</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">&quot;comments&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;disqus_thread&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;//disqus.com/?ref_noscript&quot;</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">&lt;%</span><span class="language-perl"> &#125; </span><span class="language-xml">%&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="つまずいたところ">つまずいたところ</span></h4><p>その後 <code>hexo s</code> で確認してもうまく反映されなかったのですが、<code>hexo d -g</code> してパブリッシュしてみると、反映されていました。</p>
+<h4><span id="参考">参考</span></h4><p><a target="_blank" rel="noopener" href="https://yoshinorin.net/2016/11/04/setup-disqus-to-blog/">Disqusを使ってブログ（Hexo）にコメント欄を設置しました &amp; ブログにコメント欄を設置した理由</a><br><a target="_blank" rel="noopener" href="http://wassan128.github.io/blog/2015/09/11/">Hexoでの記事の追加とコメント機能について</a></p>
+<h3><span id="自動生成される目次toc-table-of-contentsの導入">自動生成される目次（ToC: Table of Contents）の導入</span></h3><p>いいなぁと思っていたので、目次も導入しました。<br>きっかけは、<a target="_blank" rel="noopener" href="https://tea3.github.io/p/usecase-of-hexo-plugin/">Hexoブログで使っているプラグインを晒してみる</a> でした。<br>その後 <code>hexo-toc</code> を導入してみましたが、うまくいかず、別の手段を探していた時にちょうど同様の事象にあたっている方を発見しました。<br><a target="_blank" rel="noopener" href="https://gazee.net/hexo/hexo-add-toc/">Hexoに目次を自動的に追加する方法</a></p>
+<h4><span id="テンプレートの編集">テンプレートの編集</span></h4><p>以下を記事のテンプレートに追加します。場所は <code>&lt;%- post.content %&gt;</code> の上です。</p>
+<p><code>vi themes/lhogehoge/layout/_partial/article.ejs</code></p>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">&lt;<span class="meta">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span>&#123; <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;toc&quot;</span> class=<span class="string">&quot;toc-article&quot;</span>&gt;</span><br><span class="line">    &lt;p class=<span class="string">&quot;toc-title&quot;</span>&gt;目次&lt;/p&gt;</span><br><span class="line">    &lt;<span class="meta">%</span>- toc<span class="comment">(post.content)</span> <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;<span class="meta">%</span> &#125; <span class="meta">%</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ただし、私の場合は、list が重複してしまったので、以下のように微調整を施しました。</p>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">&lt;<span class="meta">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span>&#123; <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;toc&quot;</span> class=<span class="string">&quot;toc-article&quot;</span>&gt;</span><br><span class="line">    &lt;p class=<span class="string">&quot;toc-title&quot;</span>&gt;目次&lt;/p&gt;</span><br><span class="line">&lt;<span class="meta">%</span>- toc<span class="comment">(post.content, &#123;list_number: false&#125;)</span> <span class="meta">%</span>&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;<span class="meta">%</span> &#125; <span class="meta">%</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <h4><span id="参考">参考</span></h4><p><a target="_blank" rel="noopener" href="http://morningchen.com/2015/07/15/Table-Of-Contents-for-hexo/">在Hexo中给文章加目录(Table Of Contents</a><br><a target="_blank" rel="noopener" href="https://tea3.github.io/p/usecase-of-hexo-plugin/">Hexoブログで使っているプラグインを晒してみる</a><br><a target="_blank" rel="noopener" href="https://gazee.net/hexo/hexo-add-toc/">Hexoに目次を自動的に追加する方法</a></p>
-</%></%></%></%></%>
+
         </div>
 
     </div>
@@ -245,7 +245,7 @@
 <nav class="article-nav">
   
     <a href="/2017/01/26/elk-docker-deploy1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <div class="article-nav-caption">下一篇</div>
+      <div class="article-nav-caption">prossimo</div>
       <div class="article-nav-title">
         
           Docker for Mac 環境で簡単に ELK Stack をビルドする1
@@ -255,7 +255,7 @@
   
   
     <a href="/2017/01/16/onamae/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-caption">precedente</div>
       <div class="article-nav-title">Github Pages をお名前.com で取得した独自ドメインに変更しました</div>
     </a>
   
@@ -263,7 +263,7 @@
 
 
     <section class="share">
-        <div class="share-title">分享</div>
+        <div class="share-title">share</div>
         <a class="share-item" target="_blank"
             href="https://twitter.com/share?text=Hexo にコメント機能と自動生成目次(toc)を追加しました - fascinated with tofu&url=http%3A%2F%2Fwww.fascinatedwithtofu.com%2F2017%2F01%2F18%2Fhexo-disqus-toc%2F">
             <ion-icon name="logo-twitter"></ion-icon>
@@ -280,6 +280,26 @@
 
 </article>
 
+
+<section class="ad-post">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1208598955299803"
+     crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-1208598955299803"
+        data-ad-slot="2578324623"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</section>
+
+<section class="intersection-observer-ad" style="display: none;">
+    <svg t="1642578157083" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2130" width="200" height="200"><path d="M858.453333 315.306667l-149.76-149.76A128 128 0 0 0 618.24 128h-213.333333a128 128 0 0 0-90.453334 37.546667L165.546667 315.306667A128 128 0 0 0 128 405.76v213.333333a128 128 0 0 0 37.546667 90.453334l149.76 149.76a128 128 0 0 0 90.453333 36.693333h213.333333a128 128 0 0 0 90.453334-37.546667l149.76-149.76a128 128 0 0 0 36.693333-90.453333v-213.333333a128 128 0 0 0-37.546667-89.6zM213.333333 618.24v-213.333333a42.666667 42.666667 0 0 1 12.373334-29.866667l150.186666-149.333333a42.666667 42.666667 0 0 1 29.866667-12.373334h213.333333a42.666667 42.666667 0 0 1 29.866667 12.373334l48.64 48.64-422.4 422.4-49.493333-48.64a42.666667 42.666667 0 0 1-12.373334-29.866667z m597.333334 0a42.666667 42.666667 0 0 1-12.373334 29.866667l-150.186666 150.186666a42.666667 42.666667 0 0 1-29.866667 12.373334h-213.333333a42.666667 42.666667 0 0 1-29.866667-12.373334l-47.786667-48.64 422.4-422.4 48.64 48.64a42.666667 42.666667 0 0 1 12.373334 29.866667z" p-id="2131"></path></svg>
+    <span>拦截广告不会影响网站使用</span>
+    <span>但仍希望能关闭广告拦截插件支持我们</span>
+</section>
 
 
 
@@ -366,31 +386,6 @@
 
     
       
-  <div class="widget-wrap widget-archive">
-    <div class="widget-title"><span>Archive</span></div>
-    <div class="widget-inner">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/">2015</a></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget-wrap">
-    <h3 class="widget-title">links</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="https://tofu.hatenadiary.com/" target="_blank">hatena</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-    
-      
   <div class="widget-wrap">
     <h3 class="widget-title">sponsor</h3>
     <div class="widget">
@@ -453,7 +448,19 @@
 
 
 
+<!-- Google Analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-7036741-3"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-7036741-3');
+</script>
 
+
+
+<!-- Google AdSense-->
+<script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
 
 
 
